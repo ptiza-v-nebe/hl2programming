@@ -40,6 +40,9 @@
     <Filter Include="VPC Scripts">
       <UniqueIdentifier>{A40EE377-781A-C6B9-0C7C-B3BE118D248E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CMyStuff">
+      <UniqueIdentifier>{799afe55-3163-4f6f-a0ca-d247bac93c80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\choreoobjects.lib">
@@ -3558,6 +3561,9 @@
     </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyStuff\CServerEntity.cpp">
+      <Filter>CMyStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
