@@ -1,5 +1,7 @@
 #include <cbase.h>
 
+
+
 class CServerEntity : public CBaseEntity
 {
 public:
@@ -18,20 +20,21 @@ public:
 
 	void Spawn(void){
 
+		m_nMyInteger = 1;
+		m_fMyFloat = 2.3f;
+
 		SetThink(&CServerEntity::Think);
 		SetNextThink(gpGlobals->curtime);
-
-		m_nMyInteger = 18833;
-		m_fMyFloat = 33.88f;
 
 	}
 
 	void Think(void){
-	
+		
 			DevMsg("Sending from Server\n");
 			SetNextThink(gpGlobals->curtime+1.0f);
-		
 	}
+
+
 
 public:
 	// public networked member variables:
@@ -50,6 +53,15 @@ END_DATADESC()
 // Server data table describing networked member variables (SendProps)
 // DO NOT create this in the header! Put it in the main CPP file.
 IMPLEMENT_SERVERCLASS_ST(CServerEntity, DT_ServerEntity)
-	SendPropInt(SENDINFO(m_nMyInteger), 8, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_nMyInteger), 16, SPROP_UNSIGNED),
 	SendPropFloat(SENDINFO(m_fMyFloat), 0, SPROP_NOSCALE),
 END_SEND_TABLE()
+
+
+void TestMethod(const CCommand& args)
+{
+	DevMsg("how much args passed?%d\n", args.ArgC());
+	DevMsg("what args passed? %s\n", args.GetCommandString());
+	//DevMsg("run\n");
+}
+static ConCommand my_test("my_test", TestMethod, "test ", FCVAR_CHEAT);

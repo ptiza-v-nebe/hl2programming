@@ -2898,7 +2898,12 @@ int CPhysicsProp::ObjectCaps()
 //-----------------------------------------------------------------------------
 void CPhysicsProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
+	
 	CBasePlayer *pPlayer = ToBasePlayer( pActivator );
+
+	DevMsg("Player use on CPhysicsProp: pPlayer=%p, ObjectCaps:%d\n", pPlayer,this->GetSpawnFlags());
+	
+
 	if ( pPlayer )
 	{
 		if ( HasSpawnFlags( SF_PHYSPROP_ENABLE_PICKUP_OUTPUT ) )
@@ -2906,6 +2911,7 @@ void CPhysicsProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 			m_OnPlayerUse.FireOutput( this, this );
 		}
 
+		//DevMsg("Player should here pickup\n");
 		pPlayer->PickupObject( this );
 	}
 }

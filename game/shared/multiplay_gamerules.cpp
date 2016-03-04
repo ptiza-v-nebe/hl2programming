@@ -988,12 +988,18 @@ ConVarRef suitcharger( "sk_suitcharger" );
 	//=========================================================
 	int CMultiplayRules::ItemShouldRespawn( CItem *pItem )
 	{
+		//pItem->AddSpawnFlags(1073741824);
+
+		//DevMsg("GetSpawnFlag of current item: %d\n", pItem->GetSpawnFlags());
+
+		/*
 		if ( pItem->HasSpawnFlags( SF_NORESPAWN ) )
 		{
+			DevMsg("NORESPAWN SET\n");
 			return GR_ITEM_RESPAWN_NO;
-		}
+		}*/
 
-		return GR_ITEM_RESPAWN_YES;
+		return GR_ITEM_RESPAWN_NO;
 	}
 
 

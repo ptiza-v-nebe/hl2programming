@@ -231,12 +231,13 @@ if ERRORLEVEL 1 exit /b 1
       <OutputFile>$(OutDir)/server.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Publishing to ..\..\..\game\mod_hl2mp\bin\.</Message>
-      <Command>if not exist "..\..\..\game\mod_hl2mp\bin\." mkdir "..\..\..\game\mod_hl2mp\bin\."
-copy "$(TargetDir)$(TargetFileName)" "..\..\..\game\mod_hl2mp\bin\.\$(TargetFileName)"
+      <Message>Publishing to ..\..\..\game\hl2dm\mod_hl2mp\bin\.</Message>
+      <Command>if not exist "..\..\..\game\hl2dm\mod_hl2mp\bin\." mkdir "..\..\..\game\hl2dm\mod_hl2mp\bin\."
+copy "$(TargetDir)$(TargetFileName)" "..\..\..\game\hl2dm\mod_hl2mp\bin\.\$(TargetFileName)"
+copy "..\..\..\game\hl2dm\mod_hl2mp\bin\.\$(TargetFileName)" "..\..\..\game\hl2dm-dedicated\mod_hl2mp\bin\.\$(TargetFileName)"
 if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)$(TargetName).map" copy "$(TargetDir)$(TargetName).map" ..\..\..\game\mod_hl2mp\bin\.\$(TargetName).map
-copy "$(TargetDir)$(TargetName).pdb" ..\..\..\game\mod_hl2mp\bin\.\$(TargetName).pdb
+if exist "$(TargetDir)$(TargetName).map" copy "$(TargetDir)$(TargetName).map" ..\..\..\game\hl2dm\mod_hl2mp\bin\.\$(TargetName).map
+copy "$(TargetDir)$(TargetName).pdb" ..\..\..\game\hl2dm\mod_hl2mp\bin\.\$(TargetName).pdb
 if ERRORLEVEL 1 goto BuildEventFailed
 goto BuildEventOK
 :BuildEventFailed

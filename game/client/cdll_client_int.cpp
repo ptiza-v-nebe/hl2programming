@@ -1462,7 +1462,11 @@ void CHLClient::CreateMove ( int sequence_number, float input_sample_frametime, 
 //-----------------------------------------------------------------------------
 bool CHLClient::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand )
 {
+
 	return input->WriteUsercmdDeltaToBuffer( buf, from, to, isnewcommand );
+
+	//My Debug Msg
+	DevMsg("Exec WriteUsercmdDeltaToBuffer\n");
 }
 
 //-----------------------------------------------------------------------------
