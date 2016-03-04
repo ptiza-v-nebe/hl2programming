@@ -4,6 +4,8 @@
 //
 // $NoKeywords: $
 //=============================================================================//
+#include <cbase.h>
+
 #ifndef BOT_BASE_H
 #define BOT_BASE_H
 #ifdef _WIN32

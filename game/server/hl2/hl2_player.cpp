@@ -2788,12 +2788,14 @@ bool CHL2_Player::ClientCommand( const CCommand &args )
 //-----------------------------------------------------------------------------
 void CHL2_Player::PlayerUse ( void )
 {
+	
 	// Was use pressed or released?
 	if ( ! ((m_nButtons | m_afButtonPressed | m_afButtonReleased) & IN_USE) )
 		return;
 
 	if ( m_afButtonPressed & IN_USE )
 	{
+		//DevMsg("Player hit use button\n");
 		// Currently using a latched entity?
 		if ( ClearUseEntity() )
 		{

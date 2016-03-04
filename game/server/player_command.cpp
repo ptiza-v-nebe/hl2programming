@@ -383,8 +383,11 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 		{
 			VPROF( "player->SelectItem()" );
 			player->SelectItem( weapon->GetName(), ucmd->weaponsubtype );
+			DevMsg("current weapon selection:%d, subtype %d\n", ucmd->weaponselect, ucmd->weaponsubtype);
 		}
 	}
+
+	
 
 	IServerVehicle *pVehicle = player->GetVehicle();
 

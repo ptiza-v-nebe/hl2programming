@@ -161,7 +161,9 @@ void CHL2MP_Player::GiveAllItems( void )
 {
 	EquipSuit();
 
-	CBasePlayer::GiveAmmo( 255,	"Pistol");
+	DevMsg("GiveAllItems\n");
+
+	CBasePlayer::GiveAmmo( 10,	"Pistol");
 	CBasePlayer::GiveAmmo( 255,	"AR2" );
 	CBasePlayer::GiveAmmo( 5,	"AR2AltFire" );
 	CBasePlayer::GiveAmmo( 255,	"SMG1");
@@ -197,8 +199,9 @@ void CHL2MP_Player::GiveAllItems( void )
 void CHL2MP_Player::GiveDefaultItems( void )
 {
 	EquipSuit();
-
-	CBasePlayer::GiveAmmo( 255,	"Pistol");
+	DevMsg("GiveDefItems\n");
+	CBasePlayer::GiveAmmo( 15,	"Pistol");
+	/*
 	CBasePlayer::GiveAmmo( 45,	"SMG1");
 	CBasePlayer::GiveAmmo( 1,	"grenade" );
 	CBasePlayer::GiveAmmo( 6,	"Buckshot");
@@ -212,11 +215,14 @@ void CHL2MP_Player::GiveDefaultItems( void )
 	{
 		GiveNamedItem( "weapon_crowbar" );
 	}
-	
+	*/
 	GiveNamedItem( "weapon_pistol" );
+	/*
 	GiveNamedItem( "weapon_smg1" );
 	GiveNamedItem( "weapon_frag" );
-	GiveNamedItem( "weapon_physcannon" );
+	
+	*/
+	GiveNamedItem("weapon_physcannon");
 
 	const char *szDefaultWeaponName = engine->GetClientConVarValue( engine->IndexOfEdict( edict() ), "cl_defaultweapon" );
 
@@ -333,10 +339,11 @@ void CHL2MP_Player::Spawn(void)
 	m_bReady = false;
 }
 
+/*
 void CHL2MP_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
-	
-}
+	DevMsg("Player picked up (in theory)\n");
+}*/
 
 bool CHL2MP_Player::ValidatePlayerModel( const char *pModel )
 {

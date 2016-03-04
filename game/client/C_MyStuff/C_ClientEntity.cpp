@@ -13,17 +13,20 @@ public:
 
 	void Spawn(void){
 
+		//m_nMyInteger = 18833;
+		//m_fMyFloat = 33.88f;
+
+
 		SetThink(&C_ClientEntity::ClientThink);
 		SetNextClientThink(gpGlobals->curtime);
 
-		m_nMyInteger = 18833;
-		m_fMyFloat = 33.88f;
+		
 
 	}
 
 	void ClientThink(void){
 
-		DevMsg("Sending from Client: %d, %f\n",m_nMyInteger,m_fMyFloat);
+		DevMsg("Sending from Client: %d, %f, sizeof(int)=%d\n",m_nMyInteger,m_fMyFloat,sizeof(int));
 		SetNextClientThink(gpGlobals->curtime + 1.0f);
 
 	}
