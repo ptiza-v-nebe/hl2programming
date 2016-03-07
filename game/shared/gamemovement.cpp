@@ -1894,6 +1894,8 @@ void CGameMovement::StayOnGround( void )
 //-----------------------------------------------------------------------------
 void CGameMovement::WalkMove( void )
 {
+	
+
 	int i;
 
 	Vector wishvel;
@@ -1907,6 +1909,13 @@ void CGameMovement::WalkMove( void )
 	Vector forward, right, up;
 
 	AngleVectors (mv->m_vecViewAngles, &forward, &right, &up);  // Determine movement angles
+
+	//My debug
+	/*static float m_Time;
+	if (gpGlobals->curtime > m_Time){
+		DevMsg("(CGameMovement::WalkMove) mv->m_vecViewAngles: x:%.2f,y:%.2f,z:%.2f\n", mv->m_vecViewAngles.x, mv->m_vecViewAngles.y, mv->m_vecViewAngles.z);
+		m_Time = gpGlobals->curtime + 0.2f;
+	}*/
 
 	CHandle< CBaseEntity > oldground;
 	oldground = player->GetGroundEntity();
@@ -1979,6 +1988,9 @@ void CGameMovement::WalkMove( void )
 	dest[1] = mv->GetAbsOrigin()[1] + mv->m_vecVelocity[1]*gpGlobals->frametime;	
 	dest[2] = mv->GetAbsOrigin()[2];
 
+	//My tryings.
+	//DevMsg("dest.x=%f, y=%f,z=%f\n", dest.x, dest.y, dest.z);
+
 	// first try moving directly to the next spot
 	TracePlayerBBox( mv->GetAbsOrigin(), dest, PlayerSolidMask(), COLLISION_GROUP_PLAYER_MOVEMENT, pm );
 
@@ -2010,6 +2022,8 @@ void CGameMovement::WalkMove( void )
 		VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
 		return;
 	}
+
+	
 
 	StepMove( dest, pm );
 
@@ -2104,10 +2118,19 @@ void CGameMovement::FullWalkMove( )
 		if (player->GetGroundEntity() != NULL)
 		{
 			WalkMove();
+			
+			/*
+			static int m_Time;
+			if (gpGlobals->curtime > m_Time){
+				mv->SetAbsOrigin(mv->GetAbsOrigin() + Vector(10, 0, 0));
+				//mv->m_vecAbsOrigin = mv->m_vecAbsOrigin + Vector(10, 0, 0);
+				m_Time = gpGlobals->curtime + 1.0f;
+			}*/
 		}
 		else
 		{
 			AirMove();  // Take into account movement when in air.
+			
 		}
 
 		// Set final flags.
@@ -4664,6 +4687,7 @@ void CGameMovement::PlayerMove( void )
 
 		case MOVETYPE_WALK:
 			FullWalkMove();
+			//DevMsg("Moving\n");
 			break;
 
 		case MOVETYPE_ISOMETRIC:

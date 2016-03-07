@@ -98,6 +98,9 @@ bool CBaseEntity::s_bAbsQueriesValid = true;
 
 ConVar sv_netvisdist( "sv_netvisdist", "10000", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Test networking visibility distance" );
 
+
+
+
 // This table encodes edict data.
 void SendProxy_AnimTime( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
 {
@@ -259,6 +262,10 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
 
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
+#ifdef GLOWS_ENABLE
+	SendPropBool(SENDINFO(m_bGlowEnabled)),
+#endif // GLOWS_ENABLE
+
 	SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE(DT_AnimTimeMustBeFirst), SendProxy_ClientSideAnimation ),
 	SendPropInt			(SENDINFO(m_flSimulationTime),	SIMULATION_TIME_WINDOW_BITS, SPROP_UNSIGNED|SPROP_CHANGES_OFTEN|SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_SimulationTime),
 
@@ -415,7 +422,40 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
 #ifndef _XBOX
 	AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
 #endif
+
+#ifdef GLOWS_ENABLE
+	m_bGlowEnabled.Set(false);
+#endif // GLOWS_ENABLE
+
 }
+
+#ifdef GLOWS_ENABLE
+//-----------------------------------------------------------------------------
+// Purpose: Add glow to entity
+//-----------------------------------------------------------------------------
+void CBaseEntity::AddGlowEffect(void)
+{
+	SetTransmitState(FL_EDICT_ALWAYS);
+	m_bGlowEnabled.Set(true);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Remove glow on entity
+//-----------------------------------------------------------------------------
+void CBaseEntity::RemoveGlowEffect(void)
+{
+	m_bGlowEnabled.Set(false);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Is the entity glowing?
+//-----------------------------------------------------------------------------
+bool CBaseEntity::IsGlowEffectActive(void)
+{
+	return m_bGlowEnabled;
+}
+#endif // GLOWS_ENABLE
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale up our physics hull and test against the new one
@@ -1619,6 +1659,11 @@ void CBaseEntity::Event_Killed( const CTakeDamageInfo &info )
 	m_takedamage = DAMAGE_NO;
 	m_lifeState = LIFE_DEAD;
 	UTIL_Remove( this );
+
+#ifdef GLOWS_ENABLE
+	RemoveGlowEffect();
+#endif // GLOWS_ENABLE
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2058,6 +2103,11 @@ void CBaseEntity::UpdateOnRemove( void )
 		modelinfo->ReleaseDynamicModel( m_nModelIndex ); // no-op if not dynamic
 		m_nModelIndex = -1;
 	}
+
+#ifdef GLOWS_ENABLE
+	RemoveGlowEffect();
+#endif // GLOWS_ENABLE
+
 }
 
 //-----------------------------------------------------------------------------

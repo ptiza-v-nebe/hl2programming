@@ -20,8 +20,6 @@ public:
 
 	void Spawn(void){
 
-		m_nMyInteger = 1;
-		m_fMyFloat = 2.3f;
 
 		SetThink(&CServerEntity::Think);
 		SetNextThink(gpGlobals->curtime);
@@ -30,9 +28,11 @@ public:
 
 	void Think(void){
 		
-			DevMsg("Sending from Server\n");
-			SetNextThink(gpGlobals->curtime+1.0f);
+			
+			//SetNextThink(gpGlobals->curtime+1.0f);
 	}
+
+
 
 
 

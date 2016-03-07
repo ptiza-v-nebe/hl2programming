@@ -15,6 +15,7 @@
 #pragma once
 #endif
 
+
 #include "mathlib/vector.h"
 #include "icliententityinternal.h"
 #include "engine/ivmodelinfo.h"
@@ -35,6 +36,13 @@
 #include "particle_property.h"
 #include "toolframework/itoolentity.h"
 #include "tier0/threadtools.h"
+
+//My implementations
+#ifdef GLOWS_ENABLE_BASEENTITY
+#include "glow_outline_effect.h"
+#endif // GLOWS_ENABLE
+
+
 
 class C_Team;
 class IPhysicsObject;
@@ -59,6 +67,8 @@ class CEntityMapData;
 class ConVar;
 class CDmgAccumulator;
 class IHasAttributes;
+
+
 
 struct CSoundParameters;
 
@@ -179,6 +189,32 @@ class C_BaseEntity : public IClientEntity
 
 	friend class CPrediction;
 	friend void cc_cl_interp_all_changed( IConVar *pConVar, const char *pOldString, float flOldValue );
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+public:
+	CGlowObject			*GetGlowObject(void){ return m_pGlowEffect; }
+	virtual void		GetGlowEffectColor(float *r, float *g, float *b);
+	//	void				EnableGlowEffect( float r, float g, float b );
+
+	void				SetClientSideGlowEnabled(bool bEnabled){ m_bClientSideGlowEnabled = bEnabled; UpdateGlowEffect(); }
+	bool				IsClientSideGlowEnabled(void){ return m_bClientSideGlowEnabled; }
+#endif // GLOWS_ENABLE_BASEENTITY
+
+
+
+#ifdef GLOWS_ENABLE_BASEENTITY	
+protected:
+	virtual void		UpdateGlowEffect(void);
+	virtual void		DestroyGlowEffect(void);
+#endif // GLOWS_ENABLE_BASEENTITY
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+private:
+	bool				m_bClientSideGlowEnabled;	// client-side only value used for spectator
+	bool				m_bGlowEnabled;				// networked value
+	bool				m_bOldGlowEnabled;
+	CGlowObject			*m_pGlowEffect;
+#endif // GLOWS_ENABLE_BASEENTITY
 
 public:
 	DECLARE_DATADESC();
@@ -2213,4 +2249,10 @@ inline bool C_BaseEntity::ShouldRecordInTools() const
 
 C_BaseEntity *CreateEntityByName( const char *className );
 
+
 #endif // C_BASEENTITY_H
+
+
+
+
+

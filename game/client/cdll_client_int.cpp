@@ -745,7 +745,6 @@ IBaseClientDLL *clientdll = &gHLClient;
 
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CHLClient, IBaseClientDLL, CLIENT_DLL_INTERFACE_VERSION, gHLClient );
 
-
 //-----------------------------------------------------------------------------
 // Precaches a material
 //-----------------------------------------------------------------------------
@@ -1462,11 +1461,11 @@ void CHLClient::CreateMove ( int sequence_number, float input_sample_frametime, 
 //-----------------------------------------------------------------------------
 bool CHLClient::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand )
 {
+	//My Debug Msg
+	//DevMsg("CHLClient::WriteUsercmdDeltaToBuffer() doing input->WriteUsercmdDeltaToBuffer()\n");
 
 	return input->WriteUsercmdDeltaToBuffer( buf, from, to, isnewcommand );
 
-	//My Debug Msg
-	DevMsg("Exec WriteUsercmdDeltaToBuffer\n");
 }
 
 //-----------------------------------------------------------------------------

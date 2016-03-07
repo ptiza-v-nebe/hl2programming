@@ -37,6 +37,10 @@
 #include "hud_vote.h"
 #include "ienginevgui.h"
 #include "sourcevr/isourcevirtualreality.h"
+#include "glow_outline_effect.h"
+
+#include "clienteffectprecachesystem.h"
+
 #if defined( _X360 )
 #include "xbox/xbox_console.h"
 #endif
@@ -80,6 +84,11 @@ ConVar cl_drawhud( "cl_drawhud", "1", FCVAR_CHEAT, "Enable the rendering of the 
 ConVar hud_takesshots( "hud_takesshots", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Auto-save a scoreboard screenshot at the end of a map." );
 ConVar hud_freezecamhide( "hud_freezecamhide", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Hide the HUD during freeze-cam" );
 ConVar cl_show_num_particle_systems( "cl_show_num_particle_systems", "0", FCVAR_CLIENTDLL, "Display the number of active particle systems." );
+
+CLIENTEFFECT_REGISTER_BEGIN(PrecachePostProcessingEffectsGlow)
+CLIENTEFFECT_MATERIAL("dev/glow_color")
+CLIENTEFFECT_MATERIAL("dev/halo_add_to_screen")
+CLIENTEFFECT_REGISTER_END_CONDITIONAL(engine->GetDXSupportLevel() >= 90)
 
 extern ConVar v_viewmodel_fov;
 extern ConVar voice_modenable;
@@ -407,6 +416,13 @@ void ClientModeShared::Shutdown()
 //-----------------------------------------------------------------------------
 bool ClientModeShared::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
+	
+	/*static float m_nTime;
+	if (gpGlobals->curtime > m_nTime){
+		DevMsg("ClientModeShared::CreateMove() weaponselect%d\n", cmd->weaponselect);
+		m_nTime = gpGlobals->curtime + 1.0f;
+	}*/
+
 	// Let the player override the view.
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if(!pPlayer)
@@ -782,6 +798,12 @@ int ClientModeShared::HudElementKeyInput( int down, ButtonCode_t keynum, const c
 //-----------------------------------------------------------------------------
 bool ClientModeShared::DoPostScreenSpaceEffects( const CViewSetup *pSetup )
 {
+#ifdef GLOWS_ENABLE
+	g_GlowObjectManager.RenderGlowEffects( pSetup, 0 );
+#endif // GLOWS_ENABLE
+
+	
+
 #if defined( REPLAY_ENABLED )
 	if ( engine->IsPlayingDemo() )
 	{

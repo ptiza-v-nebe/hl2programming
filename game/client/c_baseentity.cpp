@@ -41,8 +41,10 @@
 #include "inetchannelinfo.h"
 #include "proto_version.h"
 
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
 
 
 #ifdef INTERPOLATEDVAR_PARANOID_MEASUREMENT
@@ -430,6 +432,11 @@ END_RECV_TABLE()
 
 
 BEGIN_RECV_TABLE_NOBASE(C_BaseEntity, DT_BaseEntity)
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+	RecvPropBool(RECVINFO(m_bGlowEnabled)),
+#endif // GLOWS_ENABLE_BASEENTITY
+
 	RecvPropDataTable( "AnimTimeMustBeFirst", 0, 0, &REFERENCE_RECV_TABLE(DT_AnimTimeMustBeFirst) ),
 	RecvPropInt( RECVINFO(m_flSimulationTime), 0, RecvProxy_SimulationTime ),
 	RecvPropInt( RECVINFO( m_ubInterpolationFrame ) ),
@@ -700,6 +707,66 @@ void GetInterpolatedVarTimeRange( CInterpolatedVar<T> *pVar, float &flMin, float
 	}
 }
 
+#ifdef GLOWS_ENABLE_BASEENTITY
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void C_BaseEntity::GetGlowEffectColor(float *r, float *g, float *b)
+{
+	*r = 0.76f;
+	*g = 0.76f;
+	*b = 0.76f;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+/*
+void C_BaseCombatCharacter::EnableGlowEffect( float r, float g, float b )
+{
+// destroy the existing effect
+if ( m_pGlowEffect )
+{
+DestroyGlowEffect();
+}
+
+m_pGlowEffect = new CGlowObject( this, Vector( r, g, b ), 1.0, true );
+}
+*/
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void C_BaseEntity::UpdateGlowEffect(void)
+{
+	// destroy the existing effect
+	if (m_pGlowEffect)
+	{
+		DestroyGlowEffect();
+	}
+
+	// create a new effect
+	if (m_bGlowEnabled || m_bClientSideGlowEnabled)
+	{
+		float r, g, b;
+		GetGlowEffectColor(&r, &g, &b);
+
+		m_pGlowEffect = new CGlowObject(this, Vector(r, g, b), 1.0, true);
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void C_BaseEntity::DestroyGlowEffect(void)
+{
+	if (m_pGlowEffect)
+	{
+		delete m_pGlowEffect;
+		m_pGlowEffect = NULL;
+	}
+}
+#endif // GLOWS_ENABLE_BASEENTITY
 
 //-----------------------------------------------------------------------------
 // Global methods related to when abs data is correct
@@ -967,6 +1034,14 @@ C_BaseEntity::C_BaseEntity() :
 #endif
 
 	ParticleProp()->Init( this );
+
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+	m_pGlowEffect = NULL;
+	m_bGlowEnabled = false;
+	m_bOldGlowEnabled = false;
+	m_bClientSideGlowEnabled = false;
+#endif // GLOWS_ENABLE_BASEENTITY
 }
 
 
@@ -1045,6 +1120,10 @@ void C_BaseEntity::Clear( void )
 	//AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
 
 	UpdateVisibility();
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+	DestroyGlowEffect();
+#endif // GLOWS_ENABLE_BASEENTITY
 }
 
 //-----------------------------------------------------------------------------
@@ -3270,6 +3349,10 @@ void C_BaseEntity::OnPreDataChanged( DataUpdateType_t type )
 {
 	m_hOldMoveParent = m_hNetworkMoveParent;
 	m_iOldParentAttachment = m_iParentAttachment;
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+	m_bOldGlowEnabled = m_bGlowEnabled;
+#endif // GLOWS_ENABLE_BASEENTITY
 }
 
 void C_BaseEntity::OnDataChanged( DataUpdateType_t type )
@@ -3284,6 +3367,13 @@ void C_BaseEntity::OnDataChanged( DataUpdateType_t type )
 	{
 		UpdateVisibility();
 	}
+
+#ifdef GLOWS_ENABLE_BASEENTITY
+	if (m_bOldGlowEnabled != m_bGlowEnabled)
+	{
+		UpdateGlowEffect();
+	}
+#endif // GLOWS_ENABLE_BASEENTITY
 }
 
 ClientThinkHandle_t C_BaseEntity::GetThinkHandle()
@@ -6507,3 +6597,4 @@ void CC_CL_Find_Ent_Index( const CCommand& args )
 	}
 }
 static ConCommand cl_find_ent_index("cl_find_ent_index", CC_CL_Find_Ent_Index, "Display data for clientside entity matching specified index.\nFormat: cl_find_ent_index <index>\n", FCVAR_CHEAT);
+

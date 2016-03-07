@@ -49,6 +49,7 @@
 #include "steam/steam_api.h"
 #include "sourcevr/isourcevirtualreality.h"
 #include "client_virtualreality.h"
+#include "glow_outline_effect.h"
 
 #if defined USES_ECON_ITEMS
 #include "econ_wearable.h"
@@ -484,6 +485,14 @@ void C_BasePlayer::Spawn( void )
 	m_bWasFreezeFraming = false;
 
 	m_bFiredWeapon = false;
+
+	Vector glowColor;
+	glowColor.x = 1.0f;
+	glowColor.y = 1.0f;
+	glowColor.z = 0.5f;
+
+	//g_GlowObjectManager.RegisterGlowObject(this, glowColor, 0.25f,true,NULL, 1);
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1149,6 +1158,12 @@ void C_BasePlayer::DetermineVguiInputMode( CUserCmd *pCmd )
 //-----------------------------------------------------------------------------
 bool C_BasePlayer::CreateMove( float flInputSampleTime, CUserCmd *pCmd )
 {
+	/*static float m_nTime;
+	if (gpGlobals->curtime > m_nTime){
+		DevMsg("C_BasePlayer::CreateMove() weaponselect%d\n", pCmd->weaponselect);
+		m_nTime = gpGlobals->curtime + 1.0f;
+	}*/
+
 	// Allow the vehicle to clamp the view angles
 	if ( IsInAVehicle() )
 	{

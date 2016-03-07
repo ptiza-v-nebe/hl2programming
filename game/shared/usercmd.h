@@ -57,6 +57,8 @@ public:
 		mousedx = 0;
 		mousedy = 0;
 
+		experimentvalue = 0;
+
 		hasbeenpredicted = false;
 #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
 		entitygroundcontact.RemoveAll();
@@ -84,6 +86,8 @@ public:
 #endif
 		mousedx				= src.mousedx;
 		mousedy				= src.mousedy;
+		experimentvalue     = src.experimentvalue;
+
 
 		hasbeenpredicted	= src.hasbeenpredicted;
 
@@ -117,6 +121,7 @@ public:
 		CRC32_ProcessBuffer( &crc, &random_seed, sizeof( random_seed ) );
 		CRC32_ProcessBuffer( &crc, &mousedx, sizeof( mousedx ) );
 		CRC32_ProcessBuffer( &crc, &mousedy, sizeof( mousedy ) );
+		CRC32_ProcessBuffer(&crc, &experimentvalue, sizeof(experimentvalue));
 		CRC32_Final( &crc );
 
 		return crc;
@@ -155,6 +160,8 @@ public:
 	// Current weapon id
 	int		weaponselect;	
 	int		weaponsubtype;
+	//Experimental value
+	int experimentvalue;
 
 	int		random_seed;	// For shared random functions
 #ifdef GAME_DLL

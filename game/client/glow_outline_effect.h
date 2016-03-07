@@ -11,8 +11,11 @@
 #pragma once
 #endif
 
+//#include "cbase.h"
 #include "utlvector.h"
 #include "mathlib/vector.h"
+
+
 
 #ifdef GLOWS_ENABLE
 
@@ -116,6 +119,7 @@ public:
 	void RenderGlowEffects( const CViewSetup *pSetup, int nSplitScreenSlot );
 
 private:
+	
 
 	void RenderGlowModels( const CViewSetup *pSetup, int nSplitScreenSlot, CMatRenderContextPtr &pRenderContext );
 	void ApplyEntityGlowEffects( const CViewSetup *pSetup, int nSplitScreenSlot, CMatRenderContextPtr &pRenderContext, float flBloomScale, int x, int y, int w, int h );

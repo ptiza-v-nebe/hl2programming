@@ -3191,6 +3191,8 @@ void CBasePlayer::RunNullCommand( void )
 //-----------------------------------------------------------------------------
 void CBasePlayer::PhysicsSimulate( void )
 {
+	
+
 	VPROF_BUDGET( "CBasePlayer::PhysicsSimulate", VPROF_BUDGETGROUP_PLAYER );
 
 	// If we've got a moveparent, we must simulate that first.
@@ -3352,6 +3354,8 @@ void CBasePlayer::PhysicsSimulate( void )
 
 		for ( int i = 0; i < commandsToRun; ++i )
 		{
+			
+
 			PlayerRunCommand( &vecAvailCommands[ i ], MoveHelperServer() );
 
 			// Update our vphysics object.
@@ -3359,7 +3363,7 @@ void CBasePlayer::PhysicsSimulate( void )
 			{
 				VPROF( "CBasePlayer::PhysicsSimulate-UpdateVPhysicsPosition" );
 				// If simulating at 2 * TICK_INTERVAL, add an extra TICK_INTERVAL to position arrival computation
-				UpdateVPhysicsPosition( m_vNewVPhysicsPosition, m_vNewVPhysicsVelocity, vphysicsArrivalTime );
+				UpdateVPhysicsPosition(m_vNewVPhysicsPosition, m_vNewVPhysicsVelocity, vphysicsArrivalTime );
 				vphysicsArrivalTime += TICK_INTERVAL;
 			}
 		}
@@ -3431,6 +3435,7 @@ void CBasePlayer::ProcessUsercmds( CUserCmd *cmds, int numcmds, int totalcmds,
 	int dropped_packets, bool paused )
 {
 	CCommandContext *ctx = AllocCommandContext();
+
 	Assert( ctx );
 
 	int i;
@@ -3659,6 +3664,9 @@ ConVar xc_crouch_debounce( "xc_crouch_debounce", "0", FCVAR_NONE );
 //-----------------------------------------------------------------------------
 void CBasePlayer::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 {
+	
+	//DevMsg("CBasePlayer::PlayerRunCommand(CUserCmd *ucmd,..) --> %d\n", ucmd->experimentvalue);
+
 	m_touchedPhysObject = false;
 
 	if ( pl.fixangle == FIXANGLE_NONE)
@@ -5059,6 +5067,9 @@ void CBasePlayer::Spawn( void )
 	UpdateLastKnownArea();
 
 	m_weaponFiredTimer.Invalidate();
+
+	//Glowing of players
+	//AddGlowEffect();
 }
 
 void CBasePlayer::Activate( void )

@@ -819,7 +819,7 @@ void CInput::ComputeSideMove( CUserCmd *cmd )
 			+ -ideal_sin*KeyState(&in_forward);
 
 		cmd->sidemove += cl_sidespeed.GetFloat() * movement;
-
+		
 		return;
 	}
 
@@ -833,6 +833,7 @@ void CInput::ComputeSideMove( CUserCmd *cmd )
 	// Otherwise, check strafe keys
 	cmd->sidemove += cl_sidespeed.GetFloat() * KeyState (&in_moveright);
 	cmd->sidemove -= cl_sidespeed.GetFloat() * KeyState (&in_moveleft);
+	
 }
 
 /*
@@ -1025,6 +1026,8 @@ void CInput::ExtraMouseSample( float frametime, bool active )
 		//  speed.
 		ScaleMovements( cmd );
 
+		//cmd->experimentvalue = 3388;
+
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( frametime, cmd );
 #ifdef SIXENSE
@@ -1133,6 +1136,9 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 		// Scale based on holding speed key or having too fast of a velocity based on client maximum
 		//  speed.
 		ScaleMovements( cmd );
+
+		//----Experimental values,trying to send to server----//
+		cmd->experimentvalue = 3388;
 
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( input_sample_frametime, cmd );

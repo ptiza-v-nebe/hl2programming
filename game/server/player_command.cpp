@@ -314,6 +314,8 @@ void CommentarySystem_PePlayerRunCommand( CBasePlayer *player, CUserCmd *ucmd );
 //-----------------------------------------------------------------------------
 void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *moveHelper )
 {
+	
+
 	const float playerCurTime = player->m_nTickBase * TICK_INTERVAL; 
 	const float playerFrameTime = player->m_bGamePaused ? 0 : TICK_INTERVAL;
 	const float flTimeAllowedForProcessing = player->ConsumeMovementTimeForUserCmdProcessing( playerFrameTime );
@@ -345,6 +347,8 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	{
 		ucmd->viewangles = vec3_angle;
 	}
+
+	
 
 	// Add and subtract buttons we're forcing on the player
 	ucmd->buttons |= player->m_afButtonForced;
@@ -383,7 +387,7 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 		{
 			VPROF( "player->SelectItem()" );
 			player->SelectItem( weapon->GetName(), ucmd->weaponsubtype );
-			DevMsg("current weapon selection:%d, subtype %d\n", ucmd->weaponselect, ucmd->weaponsubtype);
+			//DevMsg("CPlayerMove::RunCommand() weaponselection %d, subtype %d\n", ucmd->weaponselect, ucmd->weaponsubtype);
 		}
 	}
 
@@ -429,6 +433,7 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 
 	// Setup input.
 	SetupMove( player, ucmd, moveHelper, g_pMoveData );
+
 
 	// Let the game do the movement.
 	if ( !pVehicle )
