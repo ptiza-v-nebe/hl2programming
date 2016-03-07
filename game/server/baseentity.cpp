@@ -262,9 +262,7 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
 
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
-#ifdef GLOWS_ENABLE
-	SendPropBool(SENDINFO(m_bGlowEnabled)),
-#endif // GLOWS_ENABLE
+
 
 	SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE(DT_AnimTimeMustBeFirst), SendProxy_ClientSideAnimation ),
 	SendPropInt			(SENDINFO(m_flSimulationTime),	SIMULATION_TIME_WINDOW_BITS, SPROP_UNSIGNED|SPROP_CHANGES_OFTEN|SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_SimulationTime),
@@ -423,38 +421,10 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
 	AddEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
 #endif
 
-#ifdef GLOWS_ENABLE
-	m_bGlowEnabled.Set(false);
-#endif // GLOWS_ENABLE
+
 
 }
 
-#ifdef GLOWS_ENABLE
-//-----------------------------------------------------------------------------
-// Purpose: Add glow to entity
-//-----------------------------------------------------------------------------
-void CBaseEntity::AddGlowEffect(void)
-{
-	SetTransmitState(FL_EDICT_ALWAYS);
-	m_bGlowEnabled.Set(true);
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Remove glow on entity
-//-----------------------------------------------------------------------------
-void CBaseEntity::RemoveGlowEffect(void)
-{
-	m_bGlowEnabled.Set(false);
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Is the entity glowing?
-//-----------------------------------------------------------------------------
-bool CBaseEntity::IsGlowEffectActive(void)
-{
-	return m_bGlowEnabled;
-}
-#endif // GLOWS_ENABLE
 
 
 //-----------------------------------------------------------------------------
@@ -1660,9 +1630,6 @@ void CBaseEntity::Event_Killed( const CTakeDamageInfo &info )
 	m_lifeState = LIFE_DEAD;
 	UTIL_Remove( this );
 
-#ifdef GLOWS_ENABLE
-	RemoveGlowEffect();
-#endif // GLOWS_ENABLE
 
 }
 
@@ -2104,9 +2071,6 @@ void CBaseEntity::UpdateOnRemove( void )
 		m_nModelIndex = -1;
 	}
 
-#ifdef GLOWS_ENABLE
-	RemoveGlowEffect();
-#endif // GLOWS_ENABLE
 
 }
 

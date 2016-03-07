@@ -346,21 +346,6 @@ class CBaseEntity : public IServerEntity
 public:
 	DECLARE_CLASS_NOBASE( CBaseEntity );	
 
-	//----------------------------------------
-	//Glowing outline around entity
-	//----------------------------------------
-#ifdef GLOWS_ENABLE
-protected:
-		CNetworkVar(bool, m_bGlowEnabled);
-#endif // GLOWS_ENABLE
-
-#ifdef GLOWS_ENABLE
-public:
-		// Glows
-		void				AddGlowEffect(void);
-		void				RemoveGlowEffect(void);
-		bool				IsGlowEffectActive(void);
-#endif // GLOWS_ENABLE
 
 public:
 	//----------------------------------------

@@ -1,9 +1,9 @@
 #include <cbase.h>
 
-class C_ClientEntity : public C_BaseEntity
+class C_ClientEntity : public C_BaseAnimating
 {
 public:
-	DECLARE_CLASS(C_ClientEntity, C_BaseEntity); // generic entity class macro
+	DECLARE_CLASS(C_ClientEntity, C_BaseAnimating); // generic entity class macro
 	DECLARE_DATADESC();
 	DECLARE_CLIENTCLASS(); // this is a client representation of a server class 
 
@@ -26,7 +26,7 @@ public:
 
 	void ClientThink(void){
 
-		DevMsg("Sending from Client: %d, %f, sizeof(int)=%d\n",m_nMyInteger,m_fMyFloat,sizeof(int));
+		//DevMsg("Sending from Client: %d, %f, sizeof(int)=%d\n",m_nMyInteger,m_fMyFloat,sizeof(int));
 		SetNextClientThink(gpGlobals->curtime + 1.0f);
 
 	}

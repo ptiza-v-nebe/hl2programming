@@ -1,10 +1,13 @@
+#ifndef BASEENTITYGLOW_HEADER
+#define BASEENTITYGLOW_HEADER
+
 #include <cbase.h>
 
 //----------------------------------------
 //Purpose: Glowing outline
 //----------------------------------------
 
-class CBaseEntityGlowOutline : public CBaseEntity{
+class CBaseEntityGlowOutline: public CBaseEntity {
 
 	DECLARE_CLASS(CBaseEntityGlowOutline, CBaseEntity)
 	DECLARE_DATADESC();
@@ -35,3 +38,4 @@ public:
 };
 
 
+#endif

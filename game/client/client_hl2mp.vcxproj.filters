@@ -1946,7 +1946,9 @@
     <ClInclude Include="toolframework_client.h">
       <Filter>Tool Framework</Filter>
     </ClInclude>
-    <ClInclude Include="c_baseentity_glowoutline.h" />
+    <ClInclude Include="c_baseentity_glowoutline.h">
+      <Filter>C_MyStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3512,7 +3514,9 @@
     <ClCompile Include="C_MyStuff\C_ClientEntity.cpp">
       <Filter>C_MyStuff</Filter>
     </ClCompile>
-    <ClCompile Include="c_baseentity_glowoutline.cpp" />
+    <ClCompile Include="c_baseentity_glowoutline.cpp">
+      <Filter>C_MyStuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
