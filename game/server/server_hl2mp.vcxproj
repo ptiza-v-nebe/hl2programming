@@ -292,6 +292,7 @@ exit 1
     <ClInclude Include="..\..\public\const.h" />
     <ClInclude Include="..\..\public\vphysics\constraints.h" />
     <ClInclude Include="..\..\public\coordsize.h" />
+    <ClInclude Include="CMyStuff\CServerEntity.h" />
     <ClInclude Include="cplane.h" />
     <ClInclude Include="damagemodifier.h" />
     <ClInclude Include="..\..\public\datamap.h" />

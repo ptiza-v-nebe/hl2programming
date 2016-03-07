@@ -2901,7 +2901,7 @@ void CPhysicsProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	
 	CBasePlayer *pPlayer = ToBasePlayer( pActivator );
 
-	DevMsg("Player use on CPhysicsProp: pPlayer=%p, ObjectCaps:%d\n", pPlayer,this->GetSpawnFlags());
+	//DevMsg("Player use on CPhysicsProp: pPlayer=%p, ObjectCaps:%d\n", pPlayer,this->GetSpawnFlags());
 	
 
 	if ( pPlayer )

@@ -14,6 +14,7 @@
 #include "hl2_playerlocaldata.h"
 #include "simtimer.h"
 #include "soundenvelope.h"
+#include "CMyStuff\CServerEntity.h"
 
 class CAI_Squad;
 class CPropCombineBall;
@@ -77,6 +78,8 @@ public:
 //=============================================================================
 class CHL2_Player : public CBasePlayer
 {
+//private:
+	//CBaseEntityGlowOutline the_entity;
 public:
 	DECLARE_CLASS( CHL2_Player, CBasePlayer );
 

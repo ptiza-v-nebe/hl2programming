@@ -180,6 +180,17 @@ void WriteUsercmd( bf_write *buf, const CUserCmd *to, const CUserCmd *from )
 		buf->WriteOneBit(0);
 	}
 
+	//sending experimental value
+	if (to->sliderposition != from->sliderposition)
+	{
+		buf->WriteOneBit(1);
+		buf->WriteShort(to->sliderposition);
+	}
+	else
+	{
+		buf->WriteOneBit(0);
+	}
+
 #if defined( HL2_CLIENT_DLL )
 	if ( to->entitygroundcontact.Count() != 0 )
 	{
@@ -304,6 +315,11 @@ void ReadUsercmd( bf_read *buf, CUserCmd *move, CUserCmd *from )
 	if (buf->ReadOneBit())
 	{
 		move->experimentvalue = buf->ReadShort();
+	}
+
+	if (buf->ReadOneBit())
+	{
+		move->sliderposition = buf->ReadShort();
 	}
 
 

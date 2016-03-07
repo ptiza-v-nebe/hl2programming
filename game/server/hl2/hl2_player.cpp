@@ -47,6 +47,7 @@
 #include "filters.h"
 #include "tier0/icommandline.h"
 
+
 #ifdef HL2_EPISODIC
 #include "npc_alyx_episodic.h"
 #endif
@@ -2788,14 +2789,16 @@ bool CHL2_Player::ClientCommand( const CCommand &args )
 //-----------------------------------------------------------------------------
 void CHL2_Player::PlayerUse ( void )
 {
-	
+	//DevMsg("PlayerUse\n");
 	// Was use pressed or released?
 	if ( ! ((m_nButtons | m_afButtonPressed | m_afButtonReleased) & IN_USE) )
 		return;
 
 	if ( m_afButtonPressed & IN_USE )
 	{
+		//Here you can do something if player has nothing grabbed
 		//DevMsg("Player hit use button\n");
+		
 		// Currently using a latched entity?
 		if ( ClearUseEntity() )
 		{
@@ -2839,11 +2842,24 @@ void CHL2_Player::PlayerUse ( void )
 
 	CBaseEntity *pUseEntity = FindUseEntity();
 
+	
+
 	bool usedSomething = false;
 
 	// Found an object
 	if ( pUseEntity )
 	{
+		
+		//DevMsg("pUseEntity->GetClassname() -- > %s\n", pUseEntity->GetClassname());
+
+		if (!strcmpi(pUseEntity->GetClassname(), "mynetworkentity")){
+
+			//DevMsg("CHL2_Player::PlayerUse() parameter -- > %d\n", this->ProcessSlider(NULL));
+
+			((CServerEntity*)pUseEntity)->ProcessSlider(this->ProcessSlider(NULL));
+		
+		};
+
 		//!!!UNDONE: traceline here to prevent +USEing buttons through walls			
 		int caps = pUseEntity->ObjectCaps();
 		variant_t emptyVariant;

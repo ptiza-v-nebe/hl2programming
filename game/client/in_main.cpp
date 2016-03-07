@@ -1138,7 +1138,8 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 		ScaleMovements( cmd );
 
 		//----Experimental values,trying to send to server----//
-		cmd->experimentvalue = 3388;
+		cmd->sliderposition = 1133;
+		cmd->experimentvalue = 3388.0f;
 
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( input_sample_frametime, cmd );

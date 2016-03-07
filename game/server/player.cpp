@@ -3657,6 +3657,21 @@ void CBasePlayer::DumpPerfToRecipient( CBasePlayer *pRecipient, int nMaxRecords 
 // Duck debouncing code to stop menu changes from disallowing crouch/uncrouch
 ConVar xc_crouch_debounce( "xc_crouch_debounce", "0", FCVAR_NONE );
 
+int CBasePlayer::ProcessSlider(int parameter){
+
+	static int param = 0;
+
+	//DevMsg("CBasePlayer::ProcessSlider() parameter -- > %d\n", parameter);
+
+	if (parameter){
+		param = parameter;
+		return 0;
+	}
+
+	return param;
+}
+
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : *ucmd - 
@@ -3664,8 +3679,9 @@ ConVar xc_crouch_debounce( "xc_crouch_debounce", "0", FCVAR_NONE );
 //-----------------------------------------------------------------------------
 void CBasePlayer::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 {
-	
-	//DevMsg("CBasePlayer::PlayerRunCommand(CUserCmd *ucmd,..) --> %d\n", ucmd->experimentvalue);
+	//How to give this value to entity that was used once?? Children/Parents?
+	//DevMsg("CBasePlayer::PlayerRunCommand() ucmd->sliderposition -- > %d\n", ucmd->sliderposition);
+	ProcessSlider(ucmd->sliderposition);
 
 	m_touchedPhysObject = false;
 
@@ -5083,6 +5099,8 @@ void CBasePlayer::Activate( void )
 	// Reset the analog bias. If the player is in a vehicle when the game
 	// reloads, it will autosense and apply the correct bias.
 	m_iVehicleAnalogBias = VEHICLE_ANALOG_BIAS_NONE;
+
+
 }
 
 void CBasePlayer::Precache( void )
@@ -7736,6 +7754,8 @@ void CRevertSaved::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 		g_ServerGameDLL.m_fAutoSaveDangerousTime = 0.0f;
 		g_ServerGameDLL.m_fAutoSaveDangerousMinHealthToCommit = 0.0f;
 	}
+
+	
 }
 
 void CRevertSaved::InputReload( inputdata_t &inputdata )

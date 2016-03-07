@@ -249,6 +249,8 @@ public:
 	CBasePlayer();
 	~CBasePlayer();
 
+	int ProcessSlider(int parameter);
+
 	// IPlayerInfo passthrough (because we can't do multiple inheritance)
 	IPlayerInfo *GetPlayerInfo() { return &m_PlayerInfo; }
 	IBotController *GetBotController() { return &m_PlayerInfo; }

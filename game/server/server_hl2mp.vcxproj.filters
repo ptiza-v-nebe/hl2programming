@@ -1832,6 +1832,9 @@
     <ClInclude Include="baseentity_glowoutline.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="CMyStuff\CServerEntity.h">
+      <Filter>CMyStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">

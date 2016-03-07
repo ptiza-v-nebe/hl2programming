@@ -58,6 +58,7 @@ public:
 		mousedy = 0;
 
 		experimentvalue = 0;
+		sliderposition = 0;
 
 		hasbeenpredicted = false;
 #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
@@ -87,6 +88,7 @@ public:
 		mousedx				= src.mousedx;
 		mousedy				= src.mousedy;
 		experimentvalue     = src.experimentvalue;
+		sliderposition = src.sliderposition;
 
 
 		hasbeenpredicted	= src.hasbeenpredicted;
@@ -122,6 +124,7 @@ public:
 		CRC32_ProcessBuffer( &crc, &mousedx, sizeof( mousedx ) );
 		CRC32_ProcessBuffer( &crc, &mousedy, sizeof( mousedy ) );
 		CRC32_ProcessBuffer(&crc, &experimentvalue, sizeof(experimentvalue));
+		CRC32_ProcessBuffer(&crc, &sliderposition, sizeof(sliderposition));
 		CRC32_Final( &crc );
 
 		return crc;
@@ -163,6 +166,8 @@ public:
 	//Experimental value
 	int experimentvalue;
 
+	int sliderposition;
+
 	int		random_seed;	// For shared random functions
 #ifdef GAME_DLL
 	int		server_random_seed; // Only the server populates this seed
@@ -178,6 +183,8 @@ public:
 #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
 	CUtlVector< CEntityGroundContact > entitygroundcontact;
 #endif
+
+	
 
 };
 

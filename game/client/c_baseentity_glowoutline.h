@@ -1,3 +1,6 @@
+#ifndef C_BASEENTITYGLOW_HEADER
+#define C_BASEENTITYGLOW_HEADER
+
 #include <cbase.h>
 #include "glow_outline_effect.h"
 
@@ -37,3 +40,5 @@ private:
 	CGlowObject			*m_pGlowEffect;
 
 };
+
+#endif
