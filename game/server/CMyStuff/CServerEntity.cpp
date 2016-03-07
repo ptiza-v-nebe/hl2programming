@@ -1,7 +1,5 @@
 #include <cbase.h>
 
-
-
 class CServerEntity : public CBaseEntity
 {
 public:

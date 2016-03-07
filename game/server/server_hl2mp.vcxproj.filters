@@ -1829,6 +1829,9 @@
     <ClInclude Include="toolframework_server.h">
       <Filter>Tools Framework</Filter>
     </ClInclude>
+    <ClInclude Include="baseentity_glowoutline.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3564,6 +3567,9 @@
     </ClCompile>
     <ClCompile Include="CMyStuff\CServerEntity.cpp">
       <Filter>CMyStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="baseentity_glowoutline.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
