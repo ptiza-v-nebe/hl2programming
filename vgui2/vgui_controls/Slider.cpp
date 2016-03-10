@@ -35,6 +35,8 @@ static const float NOB_SIZE = 8.0f;
 //-----------------------------------------------------------------------------
 Slider::Slider(Panel *parent, const char *panelName ) : BaseClass(parent, panelName)
 {
+	m_NameOfTheCurrentPanel = (char*)panelName;
+
 	m_bIsDragOnRepositionNob = false;
 	_dragging = false;
 	_value = 0;
@@ -239,6 +241,8 @@ void Slider::SendSliderMovedMessage()
 	// send a changed message
 	KeyValues *pParams = new KeyValues("SliderMoved", "position", _value);
 	pParams->SetPtr( "panel", this );
+	pParams->SetString(m_NameOfTheCurrentPanel, m_NameOfTheCurrentPanel);
+
 	PostActionSignal( pParams );
 }
 

@@ -481,6 +481,8 @@ int C_BaseCombatWeapon::DrawModel( int flags )
 	// check if local player chases owner of this weapon in first person
 	C_BasePlayer *localplayer = C_BasePlayer::GetLocalPlayer();
 
+
+
 	if ( localplayer && localplayer->IsObserver() && GetOwner() )
 	{
 		// don't draw weapon if chasing this guy as spectator
@@ -492,7 +494,9 @@ int C_BaseCombatWeapon::DrawModel( int flags )
 			return false;
 	}
 
+
 	return BaseClass::DrawModel( flags );
+
 }
 
 

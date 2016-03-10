@@ -416,12 +416,6 @@ void ClientModeShared::Shutdown()
 //-----------------------------------------------------------------------------
 bool ClientModeShared::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 {
-	
-	/*static float m_nTime;
-	if (gpGlobals->curtime > m_nTime){
-		DevMsg("ClientModeShared::CreateMove() weaponselect%d\n", cmd->weaponselect);
-		m_nTime = gpGlobals->curtime + 1.0f;
-	}*/
 
 	// Let the player override the view.
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();

@@ -836,6 +836,19 @@ void CInput::ComputeSideMove( CUserCmd *cmd )
 	
 }
 
+void CInput::SetSliderPos(QAngle ent_angle){
+
+	m_EntityAngle = ent_angle;
+
+}
+
+QAngle CInput::GetSliderPos(){
+
+	return m_EntityAngle;
+}
+
+
+
 /*
 ==============================
 ComputeUpwardMove
@@ -1105,12 +1118,16 @@ void CInput::ExtraMouseSample( float frametime, bool active )
 
 }
 
+ConVar cl_changesliderpos("cl_changesliderpos", "0");
+
 void CInput::CreateMove ( int sequence_number, float input_sample_frametime, bool active )
 {	
 	CUserCmd *cmd = &m_pCommands[ sequence_number % MULTIPLAYER_BACKUP ];
 	CVerifiedUserCmd *pVerified = &m_pVerifiedCommands[ sequence_number % MULTIPLAYER_BACKUP ];
 
 	cmd->Reset();
+
+	
 
 	cmd->command_number = sequence_number;
 	cmd->tick_count = gpGlobals->tickcount;
@@ -1138,8 +1155,12 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 		ScaleMovements( cmd );
 
 		//----Experimental values,trying to send to server----//
-		cmd->sliderposition = 1133;
+
+		//DevMsg("x:%.2f,y:%.2f,z:%.2f\n", GetSliderPos().x, GetSliderPos().y, GetSliderPos().z);
+
+		cmd->angle = GetSliderPos();
 		cmd->experimentvalue = 3388.0f;
+		
 
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( input_sample_frametime, cmd );
@@ -1236,7 +1257,7 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 			engine->SetViewAngles( cmd->viewangles );
 		}
 #else
-		engine->SetViewAngles( cmd->viewangles );
+		//engine->SetViewAngles( cmd->viewangles );
 
 #endif
 

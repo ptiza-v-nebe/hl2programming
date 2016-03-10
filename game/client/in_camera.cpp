@@ -263,6 +263,8 @@ void CInput::CAM_Think( void )
 		break;
 	}
 
+	//All this code after this comment has to do with thirdperson
+
 	g_ThirdPersonManager.Update();
 
 	if( !m_fCameraInThirdPerson )
@@ -795,6 +797,8 @@ void CInput::CAM_StartMouseMove(void)
 		m_fCameraMovingWithMouse=false;
 		m_fCameraInterceptingMouse=false;
 	}
+
+
 }
 
 /*

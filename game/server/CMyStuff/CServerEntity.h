@@ -35,4 +35,6 @@ public:
 	CNetworkVar(float, m_fMyFloat); // floating point
 
 	int m_SliderPos;
+	CBasePlayer *pPlayerWhoHitUseOnMe;
+	QAngle entAngle,bufAngle;
 };

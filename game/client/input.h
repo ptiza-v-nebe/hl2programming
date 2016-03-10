@@ -43,6 +43,14 @@ public:
 							CInput( void );
 							~CInput( void );
 
+	//Getting Setting Slider Position
+	void        SetSliderPos(QAngle ent_angle);
+	QAngle			GetSliderPos();
+
+private:
+	QAngle m_EntityAngle;
+public:
+
 	virtual		void		Init_All( void );
 	virtual		void		Shutdown_All( void );
 	virtual		int			GetButtonBits( int );
@@ -127,6 +135,7 @@ protected:
 	void		ComputeForwardMove( CUserCmd *cmd );
 	void		ComputeUpwardMove( CUserCmd *cmd );
 	void		ComputeSideMove( CUserCmd *cmd );
+	
 	void		AdjustAngles ( float frametime );
 	void		ClampAngles( QAngle& viewangles );
 	void		AdjustPitch( float speed, QAngle& viewangles );

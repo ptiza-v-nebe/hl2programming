@@ -23,6 +23,7 @@
 #include <KeyValues.h>
 #include "filesystem.h"
 #include "matsys_controls/matsyscontrols.h"
+#include "C_MyStuff\c_EntityControlPanel.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -197,6 +198,10 @@ void VGui_CreateGlobalPanels( void )
 {
 	VPANEL gameToolParent = enginevgui->GetPanel( PANEL_CLIENTDLL_TOOLS );
 	VPANEL toolParent = enginevgui->GetPanel( PANEL_TOOLS );
+
+	VPANEL gameParent = enginevgui->GetPanel( PANEL_CLIENTDLL );
+	PanelExperimental_Create(gameParent);
+
 #if defined( TRACK_BLOCKING_IO )
 	VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
 #endif
@@ -204,6 +209,8 @@ void VGui_CreateGlobalPanels( void )
 	internalCenterPrint->Create( gameToolParent );
 	loadingdisc->Create( gameToolParent );
 	messagechars->Create( gameToolParent );
+
+	
 
 	// Debugging or related tool
 	fps->Create( toolParent );
@@ -224,6 +231,8 @@ void VGui_CreateGlobalPanels( void )
 
 void VGui_Shutdown()
 {
+	PanelExperimental_Destroy();
+
 	VGUI_DestroyClientDLLRootPanel();
 
 #ifndef _X360

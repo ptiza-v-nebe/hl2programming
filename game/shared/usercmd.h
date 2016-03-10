@@ -58,7 +58,7 @@ public:
 		mousedy = 0;
 
 		experimentvalue = 0;
-		sliderposition = 0;
+		angle.Init();
 
 		hasbeenpredicted = false;
 #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
@@ -88,7 +88,7 @@ public:
 		mousedx				= src.mousedx;
 		mousedy				= src.mousedy;
 		experimentvalue     = src.experimentvalue;
-		sliderposition = src.sliderposition;
+		angle				= src.angle;
 
 
 		hasbeenpredicted	= src.hasbeenpredicted;
@@ -124,7 +124,7 @@ public:
 		CRC32_ProcessBuffer( &crc, &mousedx, sizeof( mousedx ) );
 		CRC32_ProcessBuffer( &crc, &mousedy, sizeof( mousedy ) );
 		CRC32_ProcessBuffer(&crc, &experimentvalue, sizeof(experimentvalue));
-		CRC32_ProcessBuffer(&crc, &sliderposition, sizeof(sliderposition));
+		CRC32_ProcessBuffer(&crc, &angle, sizeof(angle));
 		CRC32_Final( &crc );
 
 		return crc;
@@ -134,6 +134,7 @@ public:
 	void MakeInert( void )
 	{
 		viewangles = vec3_angle;
+		angle = vec3_angle;
 		forwardmove = 0.f;
 		sidemove = 0.f;
 		upmove = 0.f;
@@ -166,7 +167,7 @@ public:
 	//Experimental value
 	int experimentvalue;
 
-	int sliderposition;
+	QAngle angle;
 
 	int		random_seed;	// For shared random functions
 #ifdef GAME_DLL

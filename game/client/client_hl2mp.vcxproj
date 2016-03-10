@@ -390,6 +390,7 @@ exit 1
     <ClInclude Include="..\..\game\shared\weapon_parse.h" />
     <ClInclude Include="..\..\game\shared\weapon_proficiency.h" />
     <ClInclude Include="c_baseentity_glowoutline.h" />
+    <ClInclude Include="C_MyStuff\c_EntityControlPanel.h" />
     <ClInclude Include="game_controls\baseviewport.h" />
     <ClInclude Include="game_controls\clientscoreboarddialog.h" />
     <ClInclude Include="game_controls\commandmenu.h" />
@@ -891,6 +892,7 @@ exit 1
   <ItemGroup>
     <ClCompile Include="c_baseentity_glowoutline.cpp" />
     <ClCompile Include="C_MyStuff\C_ClientEntity.cpp" />
+    <ClCompile Include="C_MyStuff\c_EntityControlPanel.cpp" />
     <ClCompile Include="mp3player.cpp" />
     <ClCompile Include="replay\cdll_replay.cpp" />
     <ClCompile Include="replay\replaycamera.cpp" />

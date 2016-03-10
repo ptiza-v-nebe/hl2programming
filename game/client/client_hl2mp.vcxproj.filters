@@ -1949,6 +1949,9 @@
     <ClInclude Include="c_baseentity_glowoutline.h">
       <Filter>C_MyStuff</Filter>
     </ClInclude>
+    <ClInclude Include="C_MyStuff\c_EntityControlPanel.h">
+      <Filter>C_MyStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3515,6 +3518,9 @@
       <Filter>C_MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="c_baseentity_glowoutline.cpp">
+      <Filter>C_MyStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="C_MyStuff\c_EntityControlPanel.cpp">
       <Filter>C_MyStuff</Filter>
     </ClCompile>
   </ItemGroup>

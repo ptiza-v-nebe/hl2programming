@@ -180,15 +180,35 @@ void WriteUsercmd( bf_write *buf, const CUserCmd *to, const CUserCmd *from )
 		buf->WriteOneBit(0);
 	}
 
-	//sending experimental value
-	if (to->sliderposition != from->sliderposition)
+	//Sending new angle of entity
+	if (to->angle[0] != from->angle[0])
 	{
 		buf->WriteOneBit(1);
-		buf->WriteShort(to->sliderposition);
+		buf->WriteFloat(to->angle[0]);
 	}
 	else
 	{
 		buf->WriteOneBit(0);
+	}
+
+	if (to->angle[1] != from->angle[1])
+	{
+		buf->WriteOneBit( 1 );
+		buf->WriteFloat(to->angle[1]);
+	}
+	else
+	{
+		buf->WriteOneBit( 0 );
+	}
+
+	if (to->angle[2] != from->angle[2])
+	{
+		buf->WriteOneBit( 1 );
+		buf->WriteFloat(to->angle[2]);
+	}
+	else
+	{
+		buf->WriteOneBit( 0 );
 	}
 
 #if defined( HL2_CLIENT_DLL )
@@ -317,10 +337,23 @@ void ReadUsercmd( bf_read *buf, CUserCmd *move, CUserCmd *from )
 		move->experimentvalue = buf->ReadShort();
 	}
 
+	// Read new angle for entity
 	if (buf->ReadOneBit())
 	{
-		move->sliderposition = buf->ReadShort();
+		move->angle[0] = buf->ReadFloat();
 	}
+
+	if (buf->ReadOneBit())
+	{
+		move->angle[1] = buf->ReadFloat();
+	}
+
+	if (buf->ReadOneBit())
+	{
+		move->angle[2] = buf->ReadFloat();
+	}
+
+
 
 
 #if defined( HL2_DLL )

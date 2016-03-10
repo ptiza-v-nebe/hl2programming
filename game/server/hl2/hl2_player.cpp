@@ -2849,15 +2849,13 @@ void CHL2_Player::PlayerUse ( void )
 	// Found an object
 	if ( pUseEntity )
 	{
-		
-		//DevMsg("pUseEntity->GetClassname() -- > %s\n", pUseEntity->GetClassname());
+
+		//If the used entity is mynetworkentity then process it
 
 		if (!strcmpi(pUseEntity->GetClassname(), "mynetworkentity")){
+			variant_t emptyVariant;
+			pUseEntity->AcceptInput("Think", this, this, emptyVariant, USE_SET);
 
-			//DevMsg("CHL2_Player::PlayerUse() parameter -- > %d\n", this->ProcessSlider(NULL));
-
-			((CServerEntity*)pUseEntity)->ProcessSlider(this->ProcessSlider(NULL));
-		
 		};
 
 		//!!!UNDONE: traceline here to prevent +USEing buttons through walls			

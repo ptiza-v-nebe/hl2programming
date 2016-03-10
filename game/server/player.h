@@ -249,7 +249,12 @@ public:
 	CBasePlayer();
 	~CBasePlayer();
 
-	int ProcessSlider(int parameter);
+	//The value from client will be handled through this two methods
+	QAngle GetSliderPos(void);
+	void SetSliderPos(QAngle sliderpos);
+private:
+	QAngle m_EntityAngle;
+public:
 
 	// IPlayerInfo passthrough (because we can't do multiple inheritance)
 	IPlayerInfo *GetPlayerInfo() { return &m_PlayerInfo; }

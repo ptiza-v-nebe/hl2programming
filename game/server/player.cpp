@@ -3657,18 +3657,13 @@ void CBasePlayer::DumpPerfToRecipient( CBasePlayer *pRecipient, int nMaxRecords 
 // Duck debouncing code to stop menu changes from disallowing crouch/uncrouch
 ConVar xc_crouch_debounce( "xc_crouch_debounce", "0", FCVAR_NONE );
 
-int CBasePlayer::ProcessSlider(int parameter){
+QAngle CBasePlayer::GetSliderPos(void){
 
-	static int param = 0;
+	return m_EntityAngle;
 
-	//DevMsg("CBasePlayer::ProcessSlider() parameter -- > %d\n", parameter);
-
-	if (parameter){
-		param = parameter;
-		return 0;
-	}
-
-	return param;
+}
+void CBasePlayer::SetSliderPos(QAngle ent_angle){
+	m_EntityAngle = ent_angle;
 }
 
 
@@ -3679,9 +3674,9 @@ int CBasePlayer::ProcessSlider(int parameter){
 //-----------------------------------------------------------------------------
 void CBasePlayer::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 {
-	//How to give this value to entity that was used once?? Children/Parents?
-	//DevMsg("CBasePlayer::PlayerRunCommand() ucmd->sliderposition -- > %d\n", ucmd->sliderposition);
-	ProcessSlider(ucmd->sliderposition);
+	
+	//Store in player object the angle value from sliders
+	this->SetSliderPos(ucmd->angle);
 
 	m_touchedPhysObject = false;
 

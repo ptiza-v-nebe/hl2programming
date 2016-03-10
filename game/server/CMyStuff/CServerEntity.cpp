@@ -7,7 +7,11 @@
 // Name of our entity's model
 #define	ENTITY_MODEL	"models/combine_scanner.mdl"
 
-	CServerEntity::CServerEntity(){};
+	CServerEntity::CServerEntity(){
+		entAngle.Init();
+		bufAngle.Init();
+	
+	};
 
 
 	void CServerEntity::Precache(void){
@@ -35,12 +39,16 @@
 
 	void CServerEntity::ProcessSlider(int sliderpos){
 		
+
 		m_SliderPos = sliderpos;
+
 		
 	}
 
 	void CServerEntity::UseFunc(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value){
 			
+
+		    pPlayerWhoHitUseOnMe =(CBasePlayer*)pActivator;
 
 			static bool activated = false;
 
@@ -71,11 +79,46 @@
 	}
 
 	void CServerEntity::Think(void){
+
+		entAngle = pPlayerWhoHitUseOnMe->GetSliderPos();
+
+
+		if (bufAngle.x != entAngle.x){
 		
-		//DevMsg("Now entity thinking... \n");
-		DevMsg("CServerEntity::Think() m_SliderPos --> %d\n", m_SliderPos);
+			//X Axis
+			if ((entAngle.x - bufAngle.x) > 0)
+				SetAbsAngles(QAngle((GetAbsAngles().x + (entAngle.x - bufAngle.x)), GetAbsAngles().y, GetAbsAngles().z));
+			else
+				SetAbsAngles(QAngle((GetAbsAngles().x - (bufAngle.x - entAngle.x) ), GetAbsAngles().y, GetAbsAngles().z));
+
+			bufAngle.x = entAngle.x;
+		}
+
+		if (bufAngle.y != entAngle.y){
+			//Y Axis
+			if ((entAngle.y - bufAngle.y) > 0)
+				SetAbsAngles(QAngle(GetAbsAngles().x, (GetAbsAngles().y + (entAngle.y - bufAngle.y)), GetAbsAngles().z));
+			else
+				SetAbsAngles(QAngle(GetAbsAngles().x, (GetAbsAngles().y - (bufAngle.y - entAngle.y)), GetAbsAngles().z));
+
+			bufAngle.y = entAngle.y;
+		}
+
+		if (bufAngle.z != entAngle.z){
+			//Z Axis
+			if ((entAngle.z - bufAngle.z) > 0)
+				SetAbsAngles(QAngle(GetAbsAngles().x, GetAbsAngles().y, (GetAbsAngles().z + (entAngle.z - bufAngle.z))));
+			else
+				SetAbsAngles(QAngle(GetAbsAngles().x, GetAbsAngles().y, (GetAbsAngles().z - (bufAngle.z - entAngle.z))));
+
+			bufAngle.z = entAngle.z;
+		}
+
+
+		
+
 			
-			SetNextThink(gpGlobals->curtime+1.0f);
+		SetNextThink(gpGlobals->curtime + 0.1f);
 	}
 
 
@@ -127,6 +170,9 @@ CON_COMMAND(testentity, "Creates an instance of the sdk model entity in front of
 		pEnt->SetAbsOrigin(vecOrigin);
 		pEnt->SetAbsAngles(vecAngles);
 		DispatchSpawn(pEnt);
+
+		variant_t emptyVariant;
+		pEnt->AcceptInput("Use", pPlayer, pPlayer,emptyVariant, USE_SET);
 		
 	}
 }
