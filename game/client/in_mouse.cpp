@@ -593,8 +593,8 @@ void CInput::AccumulateMouse( void )
 
 		GetMousePos(current_posx, current_posy);
 
-		//m_flAccumulatedMouseXMovement += current_posx - x;
-		//m_flAccumulatedMouseYMovement += current_posy - y;
+		m_flAccumulatedMouseXMovement += current_posx - x;
+		m_flAccumulatedMouseYMovement += current_posy - y;
 		
 #elif defined( USE_SDL )
 		int dx, dy;

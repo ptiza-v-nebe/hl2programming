@@ -1072,10 +1072,14 @@ void CHL2MP_Player::CreateViewModel( int index /*=0*/ )
 	CPredictedViewModel *vm = ( CPredictedViewModel * )CreateEntityByName( "predicted_viewmodel" );
 	if ( vm )
 	{
-		vm->SetAbsOrigin( GetAbsOrigin() );
+		vm->SetAbsOrigin( GetAbsOrigin());
 		vm->SetOwner( this );
 		vm->SetIndex( index );
 		DispatchSpawn( vm );
+
+		CBaseEntity *otherentity = Create("npc_crow", GetAbsOrigin()+Vector(100,100,100), GetAbsAngles());
+
+		otherentity->Activate();
 		vm->FollowEntity( this, false );
 		m_hViewModel.Set( index, vm );
 	}

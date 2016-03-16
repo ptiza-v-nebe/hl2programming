@@ -501,7 +501,7 @@ void CBasePlayer::CreateViewModel( int index /*=0*/ )
 	CBaseViewModel *vm = ( CBaseViewModel * )CreateEntityByName( "viewmodel" );
 	if ( vm )
 	{
-		vm->SetAbsOrigin( GetAbsOrigin() );
+		vm->SetAbsOrigin( GetAbsOrigin() +Vector(100,0,0));
 		vm->SetOwner( this );
 		vm->SetIndex( index );
 		DispatchSpawn( vm );
@@ -4991,7 +4991,7 @@ void CBasePlayer::Spawn( void )
 
 	m_Local.m_bDucked = false;// This will persist over round restart if you hold duck otherwise. 
 	m_Local.m_bDucking = false;
-    SetViewOffset( VEC_VIEW_SCALED( this ) );
+    SetViewOffset( VEC_VIEW_SCALED( this ));
 	Precache();
 	
 	m_bitsDamageType = 0;

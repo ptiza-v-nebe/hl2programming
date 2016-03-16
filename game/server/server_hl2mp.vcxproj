@@ -293,6 +293,7 @@ exit 1
     <ClInclude Include="..\..\public\vphysics\constraints.h" />
     <ClInclude Include="..\..\public\coordsize.h" />
     <ClInclude Include="CMyStuff\CServerEntity.h" />
+    <ClInclude Include="CMyStuff\vehicle_helicopter.h" />
     <ClInclude Include="cplane.h" />
     <ClInclude Include="damagemodifier.h" />
     <ClInclude Include="..\..\public\datamap.h" />
@@ -743,6 +744,7 @@ exit 1
     <ClInclude Include="trigger_area_capture.h" />
     <ClInclude Include="triggers.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="vehicle_jeep.h" />
     <ClInclude Include="vehicle_sounds.h" />
     <ClInclude Include="vguiscreen.h" />
     <ClInclude Include="..\..\public\mathlib\vmatrix.h" />
@@ -853,6 +855,7 @@ exit 1
   <ItemGroup>
     <ClCompile Include="baseentity_glowoutline.cpp" />
     <ClCompile Include="CMyStuff\CServerEntity.cpp" />
+    <ClCompile Include="CMyStuff\vehicle_helicopter.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />
     <ClCompile Include="..\..\game\shared\achievement_saverestore.cpp" />
     <ClCompile Include="..\..\game\shared\achievementmgr.cpp" />
@@ -1299,6 +1302,7 @@ exit 1
     <ClCompile Include="vehicle_base.cpp" />
     <ClCompile Include="vehicle_baseserver.cpp" />
     <ClCompile Include="..\..\game\shared\vehicle_viewblend_shared.cpp" />
+    <ClCompile Include="vehicle_jeep.cpp" />
     <ClCompile Include="vguiscreen.cpp" />
     <ClCompile Include="..\..\game\shared\voice_gamemgr.cpp" />
     <ClCompile Include="..\..\game\server\vote_controller.cpp" />

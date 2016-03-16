@@ -1835,6 +1835,12 @@
     <ClInclude Include="CMyStuff\CServerEntity.h">
       <Filter>CMyStuff</Filter>
     </ClInclude>
+    <ClInclude Include="vehicle_jeep.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyStuff\vehicle_helicopter.h">
+      <Filter>CMyStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3573,6 +3579,12 @@
     </ClCompile>
     <ClCompile Include="baseentity_glowoutline.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicle_jeep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyStuff\vehicle_helicopter.cpp">
+      <Filter>CMyStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

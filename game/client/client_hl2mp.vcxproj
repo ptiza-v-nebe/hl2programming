@@ -391,6 +391,8 @@ exit 1
     <ClInclude Include="..\..\game\shared\weapon_proficiency.h" />
     <ClInclude Include="c_baseentity_glowoutline.h" />
     <ClInclude Include="C_MyStuff\c_EntityControlPanel.h" />
+    <ClInclude Include="C_MyStuff\c_vehicle_helicopter.h" />
+    <ClInclude Include="c_prop_vehicle.h" />
     <ClInclude Include="game_controls\baseviewport.h" />
     <ClInclude Include="game_controls\clientscoreboarddialog.h" />
     <ClInclude Include="game_controls\commandmenu.h" />
@@ -435,7 +437,6 @@ exit 1
     <ClInclude Include="c_playerlocaldata.h" />
     <ClInclude Include="c_playerresource.h" />
     <ClInclude Include="c_point_camera.h" />
-    <ClInclude Include="c_prop_vehicle.h" />
     <ClInclude Include="c_recipientfilter.h" />
     <ClInclude Include="c_rope.h" />
     <ClInclude Include="c_rumble.h" />
@@ -893,6 +894,8 @@ exit 1
     <ClCompile Include="c_baseentity_glowoutline.cpp" />
     <ClCompile Include="C_MyStuff\C_ClientEntity.cpp" />
     <ClCompile Include="C_MyStuff\c_EntityControlPanel.cpp" />
+    <ClCompile Include="C_MyStuff\c_vehicle_helicopter.cpp" />
+    <ClCompile Include="c_prop_vehicle.cpp" />
     <ClCompile Include="mp3player.cpp" />
     <ClCompile Include="replay\cdll_replay.cpp" />
     <ClCompile Include="replay\replaycamera.cpp" />
@@ -1452,7 +1455,6 @@ exit 1
     <ClCompile Include="c_movie_explosion.cpp" />
     <ClCompile Include="c_particle_fire.cpp" />
     <ClCompile Include="c_particle_smokegrenade.cpp" />
-    <ClCompile Include="c_prop_vehicle.cpp" />
     <ClCompile Include="c_recipientfilter.cpp" />
     <ClCompile Include="c_smoke_trail.cpp" />
     <ClCompile Include="c_smokestack.cpp" />

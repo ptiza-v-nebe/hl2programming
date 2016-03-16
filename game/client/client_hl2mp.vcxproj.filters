@@ -587,9 +587,6 @@
     <ClInclude Include="c_point_camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_prop_vehicle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="c_recipientfilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1950,6 +1947,12 @@
       <Filter>C_MyStuff</Filter>
     </ClInclude>
     <ClInclude Include="C_MyStuff\c_EntityControlPanel.h">
+      <Filter>C_MyStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="c_prop_vehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C_MyStuff\c_vehicle_helicopter.h">
       <Filter>C_MyStuff</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3334,9 +3337,6 @@
     <ClCompile Include="c_particle_smokegrenade.cpp">
       <Filter>Source Files\Temporary Entities</Filter>
     </ClCompile>
-    <ClCompile Include="c_prop_vehicle.cpp">
-      <Filter>Source Files\Temporary Entities</Filter>
-    </ClCompile>
     <ClCompile Include="c_recipientfilter.cpp">
       <Filter>Source Files\Temporary Entities</Filter>
     </ClCompile>
@@ -3521,6 +3521,12 @@
       <Filter>C_MyStuff</Filter>
     </ClCompile>
     <ClCompile Include="C_MyStuff\c_EntityControlPanel.cpp">
+      <Filter>C_MyStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="c_prop_vehicle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C_MyStuff\c_vehicle_helicopter.cpp">
       <Filter>C_MyStuff</Filter>
     </ClCompile>
   </ItemGroup>
