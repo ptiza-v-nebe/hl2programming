@@ -63,6 +63,7 @@ void FinishClientPutInServer( CHL2MP_Player *pPlayer )
 		ClientPrint( pPlayer, HUD_PRINTTALK, "You are on team %s1\n", pPlayer->GetTeam()->GetName() );
 	}
 
+	/*
 	const ConVar *hostname = cvar->FindVar( "hostname" );
 	const char *title = (hostname) ? hostname->GetString() : "MESSAGE OF THE DAY";
 
@@ -74,7 +75,17 @@ void FinishClientPutInServer( CHL2MP_Player *pPlayer )
 
 	pPlayer->ShowViewPortPanel( PANEL_INFO, true, data );
 
-	data->deleteThis();
+	data->deleteThis();*/
+	
+	engine->ServerCommand("thirdperson\n");
+
+	/*//Auto entry helicopter
+	CBaseEntity *heli = gEntList.FindEntityByClassname(NULL, "vehicle_helicopter");
+	if (heli){
+
+		heli->Use(pPlayer, pPlayer, USE_ON, NULL); 
+		DevMsg("FinishClientPutInServer(): Entered helicopter");
+	}*/
 }
 
 /*

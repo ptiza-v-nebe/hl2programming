@@ -238,7 +238,7 @@ void C_BaseFlex::StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternio
 
 		matrix3x4_t rootxform;
 		AngleMatrix( GetRenderAngles(), GetRenderOrigin(), rootxform );
-
+	
 		Vector localShift;
 		VectorIRotate( m_vecShift, rootxform, localShift );
 		Vector localLean;

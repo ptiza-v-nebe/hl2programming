@@ -208,7 +208,7 @@ void CPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *mo
 	VPROF( "CPlayerMove::FinishMove" );
 
 	// NOTE: Don't copy this.  the movement code modifies its local copy but is not expecting to be authoritative
-	//player->m_flMaxspeed			= move->m_flClientMaxSpeed;
+	player->m_flMaxspeed			= move->m_flClientMaxSpeed;
 	player->SetAbsOrigin( move->GetAbsOrigin() );
 	player->SetAbsVelocity( move->m_vecVelocity );
 	player->SetPreviouslyPredictedOrigin( move->GetAbsOrigin() );
@@ -237,6 +237,7 @@ void CPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *mo
 	Assert( move->m_flConstraintRadius == player->m_flConstraintRadius );
 	Assert( move->m_flConstraintWidth == player->m_flConstraintWidth );
 	Assert( move->m_flConstraintSpeedFactor == player->m_flConstraintSpeedFactor );
+	
 }
 
 //-----------------------------------------------------------------------------
@@ -315,7 +316,7 @@ void CommentarySystem_PePlayerRunCommand( CBasePlayer *player, CUserCmd *ucmd );
 void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *moveHelper )
 {
 	
-
+	
 	const float playerCurTime = player->m_nTickBase * TICK_INTERVAL; 
 	const float playerFrameTime = player->m_bGamePaused ? 0 : TICK_INTERVAL;
 	const float flTimeAllowedForProcessing = player->ConsumeMovementTimeForUserCmdProcessing( playerFrameTime );
@@ -366,14 +367,14 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 		}
 	}
 
-	/*
+	
 	// TODO:  We can check whether the player is sending more commands than elapsed real time
-	cmdtimeremaining -= ucmd->msec;
-	if ( cmdtimeremaining < 0 )
-	{
+	//cmdtimeremaining -= ucmd->msec;
+	//if ( cmdtimeremaining < 0 )
+	//{
 	//	return;
-	}
-	*/
+	//}
+	
 
 	g_pGameMovement->StartTrackPredictionErrors( player );
 

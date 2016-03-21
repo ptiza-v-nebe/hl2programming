@@ -1709,9 +1709,6 @@
     <ClInclude Include="hl2\script_intro.h">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClInclude>
-    <ClInclude Include="hl2\vehicle_apc.h">
-      <Filter>Source Files\HL2 DLL</Filter>
-    </ClInclude>
     <ClInclude Include="hl2\vehicle_crane.h">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClInclude>
@@ -1839,6 +1836,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="CMyStuff\vehicle_helicopter.h">
+      <Filter>CMyStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="hl2\vehicle_apc.h">
       <Filter>CMyStuff</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3277,9 +3277,6 @@
     <ClCompile Include="hl2\npc_missiledefense.cpp">
       <Filter>Source Files\HL2 DLL\unused</Filter>
     </ClCompile>
-    <ClCompile Include="hl2\vehicle_apc.cpp">
-      <Filter>Source Files\HL2 DLL\unused</Filter>
-    </ClCompile>
     <ClCompile Include="hl2\weapon_cguard.cpp">
       <Filter>Source Files\HL2 DLL\unused</Filter>
     </ClCompile>
@@ -3584,6 +3581,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CMyStuff\vehicle_helicopter.cpp">
+      <Filter>CMyStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="hl2\vehicle_apc.cpp">
       <Filter>CMyStuff</Filter>
     </ClCompile>
   </ItemGroup>

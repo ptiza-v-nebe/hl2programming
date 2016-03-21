@@ -138,7 +138,9 @@ static ConVar tf2_feetyawrunscale( "tf2_feetyawrunscale", "2", FCVAR_REPLICATED,
 extern ConVar sv_backspeed;
 extern ConVar mp_feetyawrate;
 extern ConVar mp_facefronttime;
-extern ConVar mp_ik;
+
+ConVar mp_ik_heli("mp_ik_heli", "1", FCVAR_REPLICATED | FCVAR_DEVELOPMENTONLY, "Use IK on in-place turns.(heli)");
+
 
 CPlayerAnimState::CPlayerAnimState( CHL2MP_Player *outer )
 	: m_pOuter( outer )
@@ -162,7 +164,7 @@ void CPlayerAnimState::Update()
 
 	ComputePoseParam_BodyYaw();
 	ComputePoseParam_BodyPitch(GetOuter()->GetModelPtr());
-	ComputePoseParam_BodyLookYaw();
+	ComputePoseParam_BodyLookYaw(); //Body Yaw
 
 	ComputePlaybackRate();
 
@@ -302,6 +304,13 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 	}
 	
 	GetOuter()->SetPoseParameter( iYaw, flYaw );
+	/*static float m_Time;
+	static int i;
+	if (gpGlobals->curtime > m_Time){
+		GetOuter()->SetPoseParameter(iYaw, i*10);
+		m_Time = gpGlobals->curtime + 0.5f;
+		i++;
+	}*/
 
 #ifndef CLIENT_DLL
 		//Adrian: Make the model's angle match the legs so the hitboxes match on both sides.
@@ -546,18 +555,19 @@ Activity CPlayerAnimState::BodyYawTranslateActivity( Activity activity )
 	default:
 	case TURN_NONE:
 		return activity;
-	/*
+
+//	case TURN_RIGHT:
+	//	return ACT_TURNRIGHT45;
+//	case TURN_LEFT:
+	//	return ACT_TURNLEFT45;
+	
 	case TURN_RIGHT:
-		return ACT_TURNRIGHT45;
 	case TURN_LEFT:
-		return ACT_TURNLEFT45;
-	*/
-	case TURN_RIGHT:
-	case TURN_LEFT:
-		return mp_ik.GetBool() ? ACT_TURN : activity;
+		return mp_ik_heli.GetBool() ? ACT_TURN : activity;
 	}
 
 	Assert( 0 );
+	
 	return activity;
 }
 

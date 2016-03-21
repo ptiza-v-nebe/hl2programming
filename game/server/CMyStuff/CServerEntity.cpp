@@ -178,7 +178,8 @@ CON_COMMAND(testentity, "Creates an instance of the sdk model entity in front of
 }
 
 
-CON_COMMAND(helicopter, "create heli")
+
+CON_COMMAND(heli, "create heli")
 {
 	Vector vecForward;
 	CBasePlayer *pPlayer = UTIL_GetCommandClient();
@@ -189,7 +190,7 @@ CON_COMMAND(helicopter, "create heli")
 	}
 
 	AngleVectors(pPlayer->EyeAngles(), &vecForward);
-	CBaseEntityGlowOutline *pEnt = (CBaseEntityGlowOutline*)CreateEntityByName("npc_helicopter");
+	CBaseEntityGlowOutline *pEnt = (CBaseEntityGlowOutline*)CreateEntityByName("vehicle_helicopter");
 	if (pEnt)
 	{
 		Vector vecOrigin = pPlayer->GetAbsOrigin() + vecForward * 512 + Vector(0, 0, 256);
@@ -199,6 +200,7 @@ CON_COMMAND(helicopter, "create heli")
 		DispatchSpawn(pEnt);
 
 		pEnt->SetLocalVelocity(Vector(1000, 0, 0));
+
 
 		//variant_t emptyVariant;
 		//pEnt->AcceptInput("Use", pPlayer, pPlayer, emptyVariant, USE_SET);

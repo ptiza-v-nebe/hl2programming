@@ -142,14 +142,15 @@ QUA_helicopter::QUA_helicopter()
 {
 	
 	//m_bHasGun = true;
-	m_pServerVehicle.SetVehicle( this );
+	//m_pServerVehicle.SetVehicle(this);
+
 	m_vecGunCrosshair.Init();
 }
 void QUA_helicopter::Precache( void )
 {
 	BaseClass::Precache();
 	PrecacheModel( "models/combine_Helicopter.mdl" );
-	m_pServerVehicle.Initialize( STRING(m_vehicleScript) );
+	m_pServerVehicle->Initialize( STRING(m_vehicleScript) );
 
 	int i;
 	for ( i = 0; i < HELICOPTER_MAX_CHUNKS; ++i )
@@ -249,6 +250,8 @@ void QUA_helicopter::Spawn( void )
 	SetNextThink(gpGlobals->curtime);
 	Vector maxcull,mincull;
 	ExtractBbox(SelectHeaviestSequence(ACT_IDLE),maxcull,mincull);
+	CreateServerVehicle();
+
 	//CollisionProp()->SetSurroundingBoundsType( USE_BEST_COLLISION_BOUNDS );
 }
 
@@ -271,7 +274,7 @@ void QUA_helicopter::EnterVehicle(CBaseCombatCharacter *pPassenger)
 	m_hPlayer = (CBasePlayer*)pPassenger;
 	//m_playerOn.FireOutput( pPlayer, this, 0 );
 
-	m_pServerVehicle.SoundStart();
+	m_pServerVehicle->SoundStart();
 }
 void QUA_helicopter::ExitVehicle( int iRole )
 {
@@ -284,7 +287,7 @@ void QUA_helicopter::ExitVehicle( int iRole )
 	//m_playerOff.FireOutput( pPlayer, this, 0 );
 	//m_bEnterAnimOn = false;
 
-	m_pServerVehicle.SoundShutdown( 1.0 );
+	m_pServerVehicle->SoundShutdown( 1.0 );
 }
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -522,11 +525,11 @@ void QUA_helicopter::Morro(bool bAdelante)
 }
 void QUA_helicopter::Inclina(void) 
 {
-QAngle Valido=this->GetLocalAngles();
-float fl_lr;
-fl_lr=(20*(aclder/1))-(20*(aclizq/1));
-Valido.z=fl_lr;
-this->SetLocalAngles(Valido);
+	QAngle Valido=this->GetLocalAngles();
+	float fl_lr;
+	fl_lr=(20*(aclder/1))-(20*(aclizq/1));
+	Valido.z=fl_lr;
+	this->SetLocalAngles(Valido);
 }
 void QUA_helicopter::PostThink(void) {
 	if (IsActivityFinished()) {
@@ -611,7 +614,10 @@ void QUA_helicopter::Use(CBaseEntity *pActivator,CBaseEntity *pCaller,USE_TYPE u
 	
 	ResetUseKey( pPlayer );
 
-	GetServerVehicle()->HandlePassengerEntry( pPlayer, (value>0) );
+	//GetServerVehicle()->HandlePassengerEntry( pPlayer, (value>0) );
+
+	m_pServerVehicle->HandlePassengerEntry(pPlayer,  (value > 0));
+
 	//EmitSound( "NPC_Strider.Alert" );
 	
 }
@@ -681,8 +687,8 @@ void QUA_helicopter::ResetForwardKey( CBasePlayer *pPlayer )
 void QUA_helicopter::CreateServerVehicle( void )
 {
 	// Create our armed server vehicle
-	/*m_pServerVehicle = new CHLCServerVehicle();
-	m_pServerVehicle->SetVehicle( this );*/
+	m_pServerVehicle = new CHLCServerVehicle();
+	m_pServerVehicle->SetVehicle( this );
 }
 Class_T	QUA_helicopter::ClassifyPassenger( CBasePlayer *pPassenger, Class_T defaultClassification )
 { 
@@ -1309,12 +1315,13 @@ void CHLCServerVehicle::NPC_SetDriver( CNPC_VehicleDriver *pDriver ) {
 void CHLCServerVehicle::NPC_DriveVehicle( void ) {
 	// nada que hacer aqui
 }
-void CHLCServerVehicle::HandlePassengerEntry( CBasePlayer *pPlayer, bool bAllowEntryOutsideZone )
+void CHLCServerVehicle::HandlePassengerEntry(CBaseCombatCharacter *pPassenger, bool bAllowEntryOutsideZone)
+
 {
 	// Check to see if this vehicle can be controlled or if it's locked
-	if ( GetDrivableVehicle()->CanEnterVehicle(pPlayer) )
+	if (GetDrivableVehicle()->CanEnterVehicle(pPassenger))
 	{
-		pPlayer->GetInVehicle( this, VEHICLE_ROLE_DRIVER);
+		((CBasePlayer*)pPassenger)->GetInVehicle(this, VEHICLE_ROLE_DRIVER);
 	}
 }
 //bool CHLCServerVehicle::GetPassengerExitPoint( int nRole, Vector *pExitPoint, QAngle *pAngles )
@@ -1340,14 +1347,15 @@ void CHLCServerVehicle::HandlePassengerEntry( CBasePlayer *pPlayer, bool bAllowE
 //-----------------------------------------------------------------------------
 // Purpose: TODO: Revisar bien que pasa aqui 
 //-----------------------------------------------------------------------------
-void CHLCServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles )
+//void CHLCServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles )
+void CHLCServerVehicle::GetVehicleViewPosition(int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV)
 {
 	Assert( nRole == VEHICLE_ROLE_DRIVER );
 	CBasePlayer *pPlayer =(CBasePlayer*) GetPassenger( VEHICLE_ROLE_DRIVER );
 	Assert( pPlayer );
 
 	float flPitchFactor=1.0;
-	*pAbsAngles = pPlayer->EyeAngles();
+	*pAngles = pPlayer->EyeAngles();
 	matrix3x4_t vehicleEyePosToWorld;
 	Vector vehicleEyeOrigin;
 	QAngle vehicleEyeAngles;
@@ -1368,7 +1376,7 @@ void CHLCServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, Q
 
 	// Compute the relative rotation between the unperterbed eye attachment + the eye angles
 	matrix3x4_t cameraToWorld;
-	AngleMatrix( *pAbsAngles, cameraToWorld );
+	AngleMatrix(*pAngles, cameraToWorld);
 
 	matrix3x4_t worldToEyePos;
 	MatrixInvert( vehicleEyePosToWorld, worldToEyePos );
@@ -1386,10 +1394,10 @@ void CHLCServerVehicle::GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, Q
 	ConcatTransforms( vehicleEyePosToWorld, vehicleCameraToEyePos, newCameraToWorld );
 
 	// output new view abs angles
-	MatrixAngles( newCameraToWorld, *pAbsAngles );
+	MatrixAngles(newCameraToWorld, *pAngles);
 
 	// UNDONE: *pOrigin would already be correct in single player if the HandleView() on the server ran after vphysics
-	MatrixGetColumn( newCameraToWorld, 3, *pAbsOrigin );
+	MatrixGetColumn(newCameraToWorld, 3, *pOrigin);
 }
 
 LINK_ENTITY_TO_CLASS( qua_grenade_helicopter, CQUAGrenadeHelicopter );
@@ -1465,6 +1473,8 @@ void CQUAGrenadeHelicopter::Spawn( void )
 
 	// Allow player to blow this puppy up in the air
 	m_takedamage = DAMAGE_YES;
+
+
 
 	g_pNotify->AddEntity( this, this );
 }

@@ -48,11 +48,12 @@ class CHLCServerVehicle : public CBaseServerVehicle
 	typedef CBaseServerVehicle BaseClass;
 // IServerVehicle
 public:
-	void	GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles );
+	//void	GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles );
+	void GetVehicleViewPosition(int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV);
 	Vector	GetSmoothedVelocity( void );
 	void	NPC_SetDriver( CNPC_VehicleDriver *pDriver );
 	void	NPC_DriveVehicle( void );
-	void    HandlePassengerEntry( CBasePlayer *pPlayer, bool bAllowEntryOutsideZone );
+	void    HandlePassengerEntry(CBaseCombatCharacter *pPassenger, bool bAllowEntryOutsideZone);
 
 	//bool GetPassengerExitPoint( int nRole, Vector *pExitPoint, QAngle *pAngles );
 protected:
@@ -92,8 +93,9 @@ private:
 };
 
 class QUA_helicopter : public CBaseAnimating, public IDrivableVehicle
+//class QUA_helicopter : public CPropVehicleDriveable
 {
-	DECLARE_CLASS( QUA_helicopter, CBaseAnimating );
+	DECLARE_CLASS(QUA_helicopter, CBaseAnimating);
 public:
 	// TODO: Para que todo marche, hay que definir la serverclass
 	// Lo haremos otro dia, pero POR FIN funciona el helicopter.
@@ -156,9 +158,12 @@ public:
 	CBaseAnimating *	GetEntity() { return this; }
 
 	virtual void StopLoopingSounds();
-CHLCServerVehicle		m_pServerVehicle;
 
-	virtual IServerVehicle *GetServerVehicle() { return &m_pServerVehicle; }
+protected:
+	CHLCServerVehicle		*m_pServerVehicle;
+public:
+
+	virtual IServerVehicle *GetServerVehicle() { return m_pServerVehicle; }
 	virtual CBaseEntity	*GetVehicleEnt() { return this; }
 	
 

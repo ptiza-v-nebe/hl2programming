@@ -539,11 +539,11 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 	else
 	{
 		// Otherwise if holding strafe key and noclipping, then move upward
-/*		if ((in_strafe.state & 1) && IsNoClipping() )
-		{
-			cmd->upmove -= m_forward.GetFloat() * mouse_y;
-		} 
-		else */
+	//	if ((in_strafe.state & 1) && IsNoClipping() )
+	//	{
+	//		cmd->upmove -= m_forward.GetFloat() * mouse_y;
+	//	} 
+	///	else 
 		{
 			// Default is to apply vertical mouse movement as a forward key press.
 			cmd->forwardmove -= m_forward.GetFloat() * mouse_y;
@@ -554,6 +554,7 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 	// NOTE:  Does rounding to int cause any issues?  ywb 1/17/04
 	cmd->mousedx = (int)mouse_x;
 	cmd->mousedy = (int)mouse_y;
+
 }
 
 //-----------------------------------------------------------------------------

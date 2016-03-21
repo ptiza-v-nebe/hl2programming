@@ -4413,6 +4413,7 @@ const QAngle& C_BaseAnimating::GetRenderAngles( void )
 	{
 		return BaseClass::GetRenderAngles();	
 	}
+
 }
 
 void C_BaseAnimating::RagdollMoved( void ) 

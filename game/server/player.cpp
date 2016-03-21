@@ -3192,7 +3192,6 @@ void CBasePlayer::RunNullCommand( void )
 void CBasePlayer::PhysicsSimulate( void )
 {
 	
-
 	VPROF_BUDGET( "CBasePlayer::PhysicsSimulate", VPROF_BUDGETGROUP_PLAYER );
 
 	// If we've got a moveparent, we must simulate that first.
@@ -3405,6 +3404,7 @@ void CBasePlayer::PhysicsSimulate( void )
 // 			engine->ServerCommand( UTIL_VarArgs( "kickid %d %s\n", GetUserID(), "UserCommand Timeout" ) );
 // 		}
 // 	}
+
 }
 
 unsigned int CBasePlayer::PhysicsSolidMaskForEntity() const
@@ -4537,7 +4537,7 @@ void CBasePlayer::ForceOrigin( const Vector &vecOrigin )
 //-----------------------------------------------------------------------------
 void CBasePlayer::PostThink()
 {
-	m_vecSmoothedVelocity = m_vecSmoothedVelocity * SMOOTHING_FACTOR + GetAbsVelocity() * ( 1 - SMOOTHING_FACTOR );
+m_vecSmoothedVelocity = m_vecSmoothedVelocity * SMOOTHING_FACTOR + GetAbsVelocity() * ( 1 - SMOOTHING_FACTOR );
 
 	if ( !g_fGameOver && !m_iPlayerLocked )
 	{
@@ -4648,6 +4648,7 @@ void CBasePlayer::PostThink()
 	// Even if dead simulate entities
 	SimulatePlayerSimulatedEntities();
 #endif
+	
 
 }
 

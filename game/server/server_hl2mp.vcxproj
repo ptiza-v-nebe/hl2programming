@@ -348,6 +348,7 @@ exit 1
     <ClInclude Include="..\..\public\ihltv.h" />
     <ClInclude Include="..\..\public\ihltvdirector.h" />
     <ClInclude Include="..\..\public\vstdlib\IKeyValuesSystem.h" />
+    <ClInclude Include="hl2\vehicle_apc.h" />
     <ClInclude Include="ilagcompensationmanager.h" />
     <ClInclude Include="..\..\public\vgui\ILocalize.h" />
     <ClInclude Include="..\..\public\materialsystem\imaterial.h" />
@@ -811,7 +812,6 @@ exit 1
     <ClInclude Include="hl2\prop_combine_ball.h" />
     <ClInclude Include="hl2\rotorwash.h" />
     <ClInclude Include="hl2\script_intro.h" />
-    <ClInclude Include="hl2\vehicle_apc.h" />
     <ClInclude Include="hl2\vehicle_crane.h" />
     <ClInclude Include="hl2\weapon_alyxgun.h" />
     <ClInclude Include="hl2\weapon_crowbar.h" />
@@ -1074,6 +1074,7 @@ exit 1
     <ClCompile Include="globalstate.cpp" />
     <ClCompile Include="grenadethrown.cpp" />
     <ClCompile Include="guntarget.cpp" />
+    <ClCompile Include="hl2\vehicle_apc.cpp" />
     <ClCompile Include="h_ai.cpp" />
     <ClCompile Include="h_cycler.cpp" />
     <ClCompile Include="h_export.cpp">
@@ -1420,7 +1421,6 @@ exit 1
     <ClCompile Include="hl2\grenade_homer.cpp" />
     <ClCompile Include="hl2\grenade_pathfollower.cpp" />
     <ClCompile Include="hl2\npc_missiledefense.cpp" />
-    <ClCompile Include="hl2\vehicle_apc.cpp" />
     <ClCompile Include="hl2\weapon_cguard.cpp" />
     <ClCompile Include="hl2\weapon_flaregun.cpp" />
     <ClCompile Include="hl2mp\hl2mp_bot_temp.cpp" />

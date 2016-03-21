@@ -254,6 +254,7 @@ void CHL2MP_Player::PickDefaultSpawnTeam( void )
 					char szReturnString[512];
 
 					Q_snprintf( szReturnString, sizeof (szReturnString ), "cl_playermodel models/combine_soldier.mdl\n" );
+					
 					engine->ClientCommand ( edict(), szReturnString );
 				}
 
@@ -381,6 +382,7 @@ void CHL2MP_Player::SetPlayerTeamModel( void )
 	if ( modelIndex == -1 || ValidatePlayerModel( szModelName ) == false )
 	{
 		szModelName = "models/Combine_Soldier.mdl";
+		
 		m_iModelType = TEAM_COMBINE;
 
 		char szReturnString[512];
@@ -434,6 +436,8 @@ void CHL2MP_Player::SetPlayerModel( void )
 		if ( ValidatePlayerModel( pszCurrentModelName ) == false )
 		{
 			pszCurrentModelName = "models/Combine_Soldier.mdl";
+			
+			
 		}
 
 		Q_snprintf( szReturnString, sizeof (szReturnString ), "cl_playermodel %s\n", pszCurrentModelName );
@@ -482,6 +486,8 @@ void CHL2MP_Player::SetPlayerModel( void )
 	if ( modelIndex == -1 )
 	{
 		szModelName = "models/Combine_Soldier.mdl";
+
+		
 		m_iModelType = TEAM_COMBINE;
 
 		char szReturnString[512];
@@ -580,6 +586,14 @@ void CHL2MP_Player::PostThink( void )
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
+
+	/*static float m_Time;
+	if (gpGlobals->curtime > m_Time){
+		DevMsg("viewangles:%f,%f,%f\n", m_angEyeAngles->x, m_angEyeAngles->y, m_angEyeAngles->z);
+			m_Time = gpGlobals->curtime + 0.1f;
+	}*/
+		
+
 }
 
 void CHL2MP_Player::PlayerDeathThink()
@@ -1077,9 +1091,7 @@ void CHL2MP_Player::CreateViewModel( int index /*=0*/ )
 		vm->SetIndex( index );
 		DispatchSpawn( vm );
 
-		CBaseEntity *otherentity = Create("npc_crow", GetAbsOrigin()+Vector(100,100,100), GetAbsAngles());
-
-		otherentity->Activate();
+	
 		vm->FollowEntity( this, false );
 		m_hViewModel.Set( index, vm );
 	}
