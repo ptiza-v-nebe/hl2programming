@@ -573,6 +573,7 @@ Activity CPlayerAnimState::BodyYawTranslateActivity( Activity activity )
 
 const QAngle& CPlayerAnimState::GetRenderAngles()
 {
+	//DevMsg("GetRenderAngles() in CPlayerAnimState\n");
 	return m_angRender;
 }
 

@@ -195,8 +195,8 @@ public:
 	virtual bool		AllowMidairExit(CBaseCombatCharacter *pPassenger, int nRole) { return false; }
 
 
-	void			Drivehelicopter( int iDriverButtons, int iButtonsPressed, float flNPCSteering = 0.0 );
-	
+	void			Drivehelicopter(CUserCmd *ucmd, int iDriverButtons, int iButtonsPressed, float flNPCSteering = 0.0 );
+
 	
 	virtual Vector	EyePosition( );				// position of eyes
 	void InitializeRotorSound( void );

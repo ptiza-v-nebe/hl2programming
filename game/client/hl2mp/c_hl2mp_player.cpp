@@ -460,6 +460,8 @@ const QAngle& C_HL2MP_Player::GetRenderAngles()
 	}
 	else
 	{
+		//return vec3_angle;
+		//DevMsg("GetRenderAngles() in C_HL2MP_Player\n");
 		return m_PlayerAnimState.GetRenderAngles();
 	}
 }

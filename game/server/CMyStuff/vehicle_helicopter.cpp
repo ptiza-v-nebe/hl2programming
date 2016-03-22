@@ -143,7 +143,7 @@ QUA_helicopter::QUA_helicopter()
 	
 	//m_bHasGun = true;
 	//m_pServerVehicle.SetVehicle(this);
-
+	
 	m_vecGunCrosshair.Init();
 }
 void QUA_helicopter::Precache( void )
@@ -346,14 +346,14 @@ void QUA_helicopter::Think(void)
 	}
 	if ( m_hPlayer )
 	{
-		/*engine->Con_NPrintf( 10, " " );
+		engine->Con_NPrintf( 10, " " );
 		engine->Con_NPrintf( 11, "PILOTABLE VEHICLE HELICOPTER" );
 		engine->Con_NPrintf( 12, " " );
 		engine->Con_NPrintf( 13, "Cursors : Movement" );
 		engine->Con_NPrintf( 14, "Duck : Down" );
 		engine->Con_NPrintf( 15, "Jump : up" );
 		engine->Con_NPrintf( 16, "Attack 1 : Machine Gun" );
-	*/	Vector vecEyeDir, vecEyePos;
+		Vector vecEyeDir, vecEyePos;
 		m_hPlayer->EyePositionAndVectors( &vecEyePos, &vecEyeDir, NULL, NULL );
 
 		// Trace out from the player's eye point.
@@ -742,92 +742,104 @@ void QUA_helicopter::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper
 	// If the player's entering/exiting the vehicle, prevent movement
 	//if ( !m_bEnterAnimOn && !m_bExitAnimOn )
 	//{
-		Drivehelicopter( ucmd->buttons, player->m_afButtonPressed );
+	
+	Drivehelicopter(ucmd, ucmd->buttons, player->m_afButtonPressed);
 		ResetForwardKey(player);
 	//}
 
 	//// Run the crane's movement
 	//RunCraneMovement( gpGlobals->frametime );
 }
-void QUA_helicopter::Drivehelicopter( int iDriverButtons, int iButtonsPressed, float flNPCSteering )
+void QUA_helicopter::Drivehelicopter(CUserCmd *ucmd, int iDriverButtons, int iButtonsPressed, float flNPCSteering)
 {
 	if (iDriverButtons & IN_JUMP) {
-		if (aclup<1) {
-		aclup+=0.02;
+		if (aclup < 1) {
+			aclup += 0.02;
 		}
-	} else {
-		if(aclup>0) {
-		aclup-=0.02;
-		} else {
-		aclup=0;
+	}
+	else {
+		if (aclup > 0) {
+			aclup -= 0.02;
+		}
+		else {
+			aclup = 0;
 		}
 	}
 	if (iDriverButtons & IN_DUCK) {
-		if (acldown<1) {
-		acldown+=0.02;
+		if (acldown < 1) {
+			acldown += 0.02;
 		}
-	} else {
-		if(acldown>0) {
-		acldown-=0.02;
-		} else {
-		acldown=0;
+	}
+	else {
+		if (acldown > 0) {
+			acldown -= 0.02;
+		}
+		else {
+			acldown = 0;
 		}
 	}
 	if (iDriverButtons & IN_ATTACK) {
-		if (m_flSiguienteAtaque<=gpGlobals->curtime) {
-		m_flSiguienteAtaque=gpGlobals->curtime+2.0f;
-		if (!m_Ataca) {
-			// Solo para la actividad
-			m_Ataca=true;	
-		}
-		m_Lanza=true;
-		m_flWaitAttack=gpGlobals->curtime+0.3f;
+		if (m_flSiguienteAtaque <= gpGlobals->curtime) {
+			m_flSiguienteAtaque = gpGlobals->curtime + 2.0f;
+			if (!m_Ataca) {
+				// Solo para la actividad
+				m_Ataca = true;
+			}
+			m_Lanza = true;
+			m_flWaitAttack = gpGlobals->curtime + 0.3f;
 		}
 	}
 	if (iDriverButtons & IN_ATTACK2) {
-		if (m_iCannonCount>=100) {
-		CreateBomb();
-		m_iCannonCount=0;
+		if (m_iCannonCount >= 100) {
+			CreateBomb();
+			m_iCannonCount = 0;
 		}
 	}
-	
- if (iDriverButtons & IN_FORWARD) {
-		if (acl<1) {
-		acl+=0.02;
+
+	if (iDriverButtons & IN_FORWARD) {
+		if (acl < 1) {
+			acl += 0.02;
 		}
 		Morro(true);
-		m_bPressed=true;
-	} else {
-		if(acl>0) {
-		acl-=0.005;
-		} else {
-		acl=0;
+		m_bPressed = true;
+	}
+	else {
+		if (acl > 0) {
+			acl -= 0.005;
+		}
+		else {
+			acl = 0;
 		}
 		Morro(false);
-		m_bPressed=false;
+		m_bPressed = false;
 	}
-	if (iDriverButtons & IN_MOVELEFT) {
+
+	/*if (iDriverButtons & IN_MOVELEFT) {
 		if (aclizq<1) {
 		aclizq+=0.02;
 		}
-	} else {
+		} else {
 		if(aclizq>0) {
 		aclizq-=0.02;
 		} else {
 		aclizq=0;
-		}
-	}
+		}*/
+
+	/*
 	if (iDriverButtons & IN_MOVERIGHT) {
-		if (aclder<1) {
-		aclder+=0.02;
-		}
-	} else {
-		if(aclder>0) {
-		aclder-=0.02;
-		} else {
-		aclder=0;
-		}
+	if (aclder<1) {
+	aclder+=0.02;
 	}
+	} else {
+	if(aclder>0) {
+	aclder-=0.02;
+	} else {
+	aclder=0;
+	}
+	}*/
+
+
+
 	if ( iDriverButtons & IN_ATTACK )
 		{
 			if (m_flNextShootingTime<=gpGlobals->curtime) {
@@ -837,13 +849,93 @@ void QUA_helicopter::Drivehelicopter( int iDriverButtons, int iButtonsPressed, f
 				}
 			}
 		} 
+
+	Adelante();
+	Inclina();
 	
+	//========================
+	//---Turning left/right---
+	//========================
+
+
+
+
+	//helping angle
+	static QAngle help_Angle, help_Angle2;
+	static float localangleY;
+	static int i = 0;
+
+	
+	//Convert localangleY from 724 to 4;
+	localangleY = GetLocalAngles().y;
+
+	if (localangleY < 0)
+		localangleY = -localangleY;
+
+	while (!((localangleY >= 0.0f) && (localangleY < 360.0f)))
+		if (localangleY > 0) localangleY -= 360.0f;
+	
+
+	//Convert ucmd viewangles from 0_180,-180_0 to 0_360
+	if ((ucmd->viewangles.y > 0) && (ucmd->viewangles.y < 180))
+		help_Angle.y = ucmd->viewangles.y;
+	if ((ucmd->viewangles.y > -180) && (ucmd->viewangles.y < 0))
+		help_Angle.y = ucmd->viewangles.y + 360;
+
+		
+	if (round(help_Angle.y) == 360){
+
+		i++;
+		DevMsg("i%:d\n", i);
+
+	}
+	
+	help_Angle2.y = help_Angle.y + i * 360.0f;
 		
 	
-	Adelante();
+
+	engine->Con_NPrintf(5, "localangleY            : %3.2f\n", localangleY);
+	engine->Con_NPrintf(6, "help_Angle2.y          : %f\n", help_Angle2.y);
+	engine->Con_NPrintf(7, "help_Angle.y           : %f\n", help_Angle.y);
+	engine->Con_NPrintf(8, "i                      : %3.2d\n", i);
+
+	
+	
+
+	//Left turn
+	/*if ((1) < help_Angle.y) {
+
+		if (aclizq < 1) aclizq += 0.005;
+
+	}
+	else {
+
+		if (aclizq > 0) aclizq -= 0.02; else aclizq = 0;
+
+	}*/
+	
+
+	//Right turn
+	if ((localangleY) > help_Angle.y) {
+
+		if (aclder < 1) aclder += 0.005;
+
+	}
+	else {
+
+		if (aclder > 0) aclder -= 0.02; else aclder = 0;
+
+	}
+
+
+	//Set angles on heli
 	GiraIzquierda();
 	GiraDerecha();
-	Inclina();
+	
+
+
+
+
 }
 
 void QUA_helicopter::CreateBomb( bool bCheckForFairness, Vector *pVecVelocity, bool bMegaBomb )

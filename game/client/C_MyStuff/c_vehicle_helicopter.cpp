@@ -71,7 +71,23 @@ public:
 public:
 
 	//virtual const QAngle& GetRenderAngles() { return m_HeliAnimState.GetRenderAngles(); }
-	virtual const QAngle& GetRenderAngles() { return GetLocalAngles(); }
+	//virtual const QAngle& GetRenderAngles() {return GetLocalAngles(); }
+
+	float m_Time;
+	QAngle testangle;/*
+
+	virtual const QAngle& GetRenderAngles() {
+
+		
+		if (gpGlobals->curtime > m_Time){
+			
+			m_Time = gpGlobals->curtime + 0.5f;
+
+			return testangle + QAngle(10,0,0);
+		}
+		return testangle;
+	}*/
+
 	virtual void GetVehicleFOV( float &flFOV ) { flFOV = 0.0f; }
 	virtual void DrawHudElements();
 	virtual bool IsPassengerUsingStandardWeapons( int nRole = VEHICLE_ROLE_DRIVER ) { return false; }
@@ -135,10 +151,13 @@ C_QUA_helicopter::C_QUA_helicopter() : m_HeliAnimState(this)
 {
 	memset( &m_ViewSmoothingData, 0, sizeof( m_ViewSmoothingData ) );
 	m_ViewSmoothingData.pVehicle = this;
+	m_Time = 0.0f;
+	testangle.Init();
 }
 
 C_QUA_helicopter::~C_QUA_helicopter()
 {
+
 }
 C_BasePlayer* C_QUA_helicopter::GetPassenger( int nRole )
 {
